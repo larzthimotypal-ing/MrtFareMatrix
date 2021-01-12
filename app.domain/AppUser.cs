@@ -14,5 +14,8 @@ namespace app.domain
         [Required]
         [StringLength(60, MinimumLength = 3)]
         public string LastName { get; set; }
+        [Required]
+        [StringLength(60, MinimumLength = 3)]
+        public string Role { get; set; }
     }
 }

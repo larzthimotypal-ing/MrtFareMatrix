@@ -1,4 +1,5 @@
 ﻿using System;
+using app.domain;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,5 +11,7 @@ namespace app.repository
         {
             
         }
+
+        public DbSet<AppUser> appUsers { get; set; }
     }
 }
