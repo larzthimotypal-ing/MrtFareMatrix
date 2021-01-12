@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using app.domain;
 using app.repository;
+using app.service;
+using app.service.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -45,7 +47,7 @@ namespace app.ui
             services.ConfigureApplicationCookie(config =>
             {
                 config.Cookie.Name = "Identity.Cookie";
-                config.LoginPath = "/Home/Login";
+                config.LoginPath = "/Authenticate/Login";
             });
 
             services.AddAuthorization(config =>
@@ -57,6 +59,9 @@ namespace app.ui
 
                 config.DefaultPolicy = defaultAuthPolicy;
             });
+
+            services.AddScoped(typeof(IIdentityRepository<>), typeof(GenericIdentityRepository<>));
+            services.AddTransient<IIdentityService, IdentityService>();
 
             services.AddControllersWithViews();
         }
@@ -87,7 +92,7 @@ namespace app.ui
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Authenticate}/{action=Login}/{id?}");
             });
         }
     }

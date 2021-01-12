@@ -8,6 +8,6 @@ namespace app.service.Identity.Commands.Login
 {
     public class LoginResult
     {
-        public Task<SignInResult> Result { get; set; }
+        public SignInResult Result { get; set; }
     }
 }

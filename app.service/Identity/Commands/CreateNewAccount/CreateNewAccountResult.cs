@@ -8,6 +8,6 @@ namespace app.service.Identity.Commands.CreateNewAccount
 {
     public class CreateNewAccountResult
     {
-        public Task<IdentityResult> Result { get; set; }
+        public IdentityResult Result { get; set; }
     }
 }

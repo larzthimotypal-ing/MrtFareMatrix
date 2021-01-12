@@ -7,11 +7,12 @@ using app.repository;
 using app.service.Identity.Commands.CreateNewAccount;
 using app.service.Identity.Commands.Login;
 using app.service.Identity.Commands.SignOut;
+using app.service.Identity.Query.FindByName;
 using Microsoft.AspNetCore.Identity;
 
 namespace app.service.Identity
 {
-    class IdentityService : IIdentityService
+    public class IdentityService : IIdentityService
     {
         private readonly IIdentityRepository<AppUser> _identityRepo;
 
@@ -36,26 +37,30 @@ namespace app.service.Identity
 
             return new CreateNewAccountResult
             {
-                Result = result
+                Result = result.Result
             };
+        }
+
+        public FindByNameResult FindByName(FindByNameQuery creds)
+        {
+            var user = _identityRepo.FindByName(creds.UserName);
+
+            return new FindByNameResult
+            {
+                User = user.Result
+            };
+
+
         }
 
         public LoginResult Login(LoginCommand creds)
         {
-            var user = _identityRepo.FindByName(creds.Username);
-
-            if (user != null)
-            {
                 var result = _identityRepo.LoginResult(creds.Username, creds.Password, false, false);
                 
                 return new LoginResult
                 {
-                    Result = result
-                };
-            }
-
-            return new LoginResult { };
-            
+                    Result = result.Result
+                };      
         }
 
         public SignOutResult SignOut()
