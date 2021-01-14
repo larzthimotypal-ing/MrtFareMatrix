@@ -15,15 +15,15 @@
         @if (Model != null)
         {
             <div class="login-alert--error">
-            @if (Model.ErrorMessage == "Failed")
+            @if (Model.ErrorMessage == "Failed" && Model.ErrorMessage == "Empty")
             {
                 <p>Incorrect Username or Password</p>
             }
             </div>
         }
         <form asp-controller="Authenticate" asp-action="Login" method="post">
-            <input asp-for="Username" type="text" name="username" placeholder="Username"/>
-            <input asp-for="Password" type="password" name="password" minlength="6" placeholder="Password"/>
+            <input asp-for="Username" type="text" name="username" placeholder="Username" required/>
+            <input asp-for="Password" type="password" name="password" minlength="6" placeholder="Password" required/>
             <button type="submit" class="btn-primary--rectangle">Login</button>
         </form>
     </div>

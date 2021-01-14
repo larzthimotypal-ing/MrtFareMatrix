@@ -6,6 +6,7 @@ using app.service;
 using app.service.Identity.Commands.CreateNewAccount;
 using app.service.Identity.Commands.Login;
 using app.service.Identity.Query.FindByName;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace app.ui.Controllers
@@ -38,7 +39,7 @@ namespace app.ui.Controllers
                         Email = account.Email,
                         FirstName = account.FirstName,
                         LastName = account.LastName,
-                        Role = "Guest"
+                        Role = "Admin"
                     }).Result;
 
                     if (result.Succeeded)
@@ -64,6 +65,11 @@ namespace app.ui.Controllers
         [HttpPost]
         public IActionResult Login(LoginCommand account)
         {
+            if (account.Username == null || account.Password == null)
+            {
+                account.ErrorMessage = "Empty";
+                return View(account);
+            }
             var user = _identityService.FindByName(
                 new FindByNameQuery
                 {
@@ -86,7 +92,13 @@ namespace app.ui.Controllers
             return View(account);
         }
 
+        [Authorize(Policy = "Claim.AdminAccess")]
         public IActionResult Success()
+        {
+            return View();
+        }
+
+        public IActionResult AccessDenied()
         {
             return View();
         }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using app.domain;
 using app.repository;
+using app.repository.AuthenticationAndAuthorization.Data;
 using app.service;
 using app.service.Identity;
 using Microsoft.AspNetCore.Authorization;
@@ -42,7 +43,8 @@ namespace app.ui
                 config.Password.RequireUppercase = false;
             })
                 .AddEntityFrameworkStores<AppDbContext>()
-                .AddDefaultTokenProviders();
+                .AddDefaultTokenProviders()
+                .AddClaimsPrincipalFactory<MyUserClaimsPrincipalFactory>();
 
             services.ConfigureApplicationCookie(config =>
             {
@@ -52,16 +54,18 @@ namespace app.ui
 
             services.AddAuthorization(config =>
             {
-                var defaultAuthBuilder = new AuthorizationPolicyBuilder();
-                var defaultAuthPolicy = defaultAuthBuilder
-                .RequireAuthenticatedUser()
-                .Build();
-
-                config.DefaultPolicy = defaultAuthPolicy;
+                config.AddPolicy("Claim.AdminAccess", policyBuilder =>
+                {
+                    policyBuilder.RequireClaim("MRT.AccessLevel", "Admin");
+                });
             });
 
             services.AddScoped(typeof(IIdentityRepository<>), typeof(GenericIdentityRepository<>));
             services.AddTransient<IIdentityService, IdentityService>();
+
+            services.AddScoped<IUserClaimsPrincipalFactory<AppUser>, MyUserClaimsPrincipalFactory>();
+
+
 
             services.AddControllersWithViews();
         }
@@ -87,6 +91,8 @@ namespace app.ui
             app.UseAuthentication();
 
             app.UseAuthorization();
+
+            app.UseStatusCodePagesWithRedirects("~/Authenticate/AccessDenied");
 
             app.UseEndpoints(endpoints =>
             {

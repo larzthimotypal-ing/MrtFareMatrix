@@ -26,7 +26,7 @@
         <hr />
         <div class="form-container--content">
             <form asp-controller="Authenticate" asp-action="Register" method="post">
-                <input type="text" asp-for="Username" name="username" required minlength="6" placeholder="Username(min. 6 characters)" class="" />
+                <input type="text" asp-for="Username" name="username" required minlength="5" placeholder="Username(min. 5 characters)" class="" />
                 <input type="password" asp-for="Password" name="password" required minlength="6" placeholder="Password(min. 6 characters)"/>
                 <input type="password" asp-for="PasswordValidator" name="passwordValidator" required minlength="6" placeholder="Confirm Password"/>
                 <div class="form--name">

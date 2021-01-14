@@ -43,14 +43,19 @@ namespace app.service.Identity
 
         public FindByNameResult FindByName(FindByNameQuery creds)
         {
-            var user = _identityRepo.FindByName(creds.UserName);
+            if (creds.UserName != null)
+            {
+                var user = _identityRepo.FindByName(creds.UserName);
+                return new FindByNameResult
+                {
+                    User = user.Result
+                };
+            }
 
             return new FindByNameResult
             {
-                User = user.Result
+
             };
-
-
         }
 
         public LoginResult Login(LoginCommand creds)
