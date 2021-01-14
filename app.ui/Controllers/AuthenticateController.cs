@@ -40,7 +40,7 @@ namespace app.ui.Controllers
                         Email = account.Email,
                         FirstName = account.FirstName,
                         LastName = account.LastName,
-                        Role = "Admin"
+                        Role = "Guest"
                     }).Result;
 
                     if (result.Succeeded)
