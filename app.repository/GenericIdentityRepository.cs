@@ -11,6 +11,7 @@ namespace app.repository
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
+  
 
         public GenericIdentityRepository(
             UserManager<AppUser> userManager,
@@ -40,5 +41,6 @@ namespace app.repository
         {
             throw new NotImplementedException();
         }
+
     }
 }

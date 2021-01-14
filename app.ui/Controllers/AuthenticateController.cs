@@ -6,6 +6,7 @@ using app.service;
 using app.service.Identity.Commands.CreateNewAccount;
 using app.service.Identity.Commands.Login;
 using app.service.Identity.Query.FindByName;
+using IdentityModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -85,7 +86,14 @@ namespace app.ui.Controllers
                 
             if (result.Succeeded)
             {
-                return RedirectToAction("Success");
+                if (User.HasClaim("MRT.AccessLevel", "Admin"))
+                {
+                    return RedirectToAction("Admin");
+                }
+                else if (User.HasClaim("MRT.AccessLevel", "Guest"))
+                {
+                    return RedirectToAction("Guest");
+                }
             }
 
             account.ErrorMessage = "Failed";
@@ -99,6 +107,15 @@ namespace app.ui.Controllers
         }
 
         public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
+        public IActionResult Admin()
+        {
+            return View();
+        }
+        public IActionResult Guest()
         {
             return View();
         }
