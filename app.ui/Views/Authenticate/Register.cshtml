@@ -1,15 +1,44 @@
-﻿<h1>Register Page</h1>
+﻿@model app.service.Identity.Commands.CreateNewAccount.CreateNewAccountCommand
+@{
+    ViewData["Title"] = "Register";
+}
+<div class="container--register">
+    
+        @if (Model != null)
+         {
+            <div class="form-alert--error">
+                @if (Model.Role == "Invalid")
+                 {
+                    <p>Make sure you have a valid username and password</p>
+                 }
+                 else if (Model.Role == "PasswordNotMatch")
+                 {
+                    <p>Your Password and Confirm Password Did Not Match</p>
+                 }
+            </div>
+         }
 
-<form action="/Authenticate/Register" method="post">
-    <label>User Name</label>
-    <input type="text" name="username" />
-    <label>Password</label>
-    <input type="password" name="password" />
-    <label>First Name</label>
-    <input type="text" name="firstName" />
-    <label>Last Name</label>
-    <input type="text" name="lastName" />
-    <label>Email</label>
-    <input type="email" name="email" />
-    <button type="submit">Submit</button>
-</form>
+    <div class="form-container">
+        <div class="form-container--header">
+            <h4 class="form--title">Signup Form</h4>
+            <h5 class="form--instruction">Please fill in this form to create an account</h5>
+        </div>
+        <hr />
+        <div class="form-container--content">
+            <form asp-controller="Authenticate" asp-action="Register" method="post">
+                <input type="text" asp-for="Username" name="username" required minlength="6" placeholder="Username(min. 6 characters)" class="" />
+                <input type="password" asp-for="Password" name="password" required minlength="6" placeholder="Password(min. 6 characters)"/>
+                <input type="password" asp-for="PasswordValidator" name="passwordValidator" required minlength="6" placeholder="Confirm Password"/>
+                <div class="form--name">
+                    <input type="text" asp-for="FirstName" name="firstName"  required placeholder="First Name"/>
+                    <input type="text" asp-for="LastName" name="lastName"  required placeholder="Last Name"/>
+                </div>
+                <input type="email" asp-for="Email" name="email" required placeholder="Email"/>
+                <button type="submit" class="btn-primary--rectangle">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+

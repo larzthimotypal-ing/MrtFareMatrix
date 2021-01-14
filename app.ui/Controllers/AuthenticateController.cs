@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using app.service;
+using app.service.Identity.Commands.CreateNewAccount;
 using Microsoft.AspNetCore.Mvc;
 
 namespace app.ui.Controllers
@@ -21,23 +22,35 @@ namespace app.ui.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register(string password, string username, string firstName, string lastName, string email)
+        public IActionResult Register(CreateNewAccountCommand account)
         {
-            var result = _identityService.CreateNewAccount(
-                new app.service.Identity.Commands.CreateNewAccount.CreateNewAccountCommand
-                {
-                    Username = username,
-                    Password = password,
-                    Email = email,
-                    FirstName = firstName,
-                    LastName = lastName,
-                    Role = "Guest"
-                }).Result;
-            if(result.Succeeded)
+            if(ModelState.IsValid)
             {
-                return RedirectToAction("Login");
-            }
+                if (account.Password == account.PasswordValidator)
+                {
+                    var result = _identityService.CreateNewAccount(
+                    new CreateNewAccountCommand
+                    {
+                        Username = account.Username,
+                        Password = account.Password,
+                        Email = account.Email,
+                        FirstName = account.FirstName,
+                        LastName = account.LastName,
+                        Role = "Guest"
+                    }).Result;
 
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("Login");
+                    }
+
+                    account.Role = "Invalid";
+                    return View(account);
+                }
+                else account.Role = "PasswordNotMatch";
+                return View(account);
+
+            }
             return View();
         }
 

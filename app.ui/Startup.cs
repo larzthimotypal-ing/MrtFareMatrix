@@ -36,7 +36,7 @@ namespace app.ui
             services.AddIdentity<AppUser, IdentityRole>(config =>
             {
                 //configuring password
-                config.Password.RequiredLength = 4;
+                config.Password.RequiredLength = 6;
                 config.Password.RequireDigit = false;
                 config.Password.RequireNonAlphanumeric = false;
                 config.Password.RequireUppercase = false;
