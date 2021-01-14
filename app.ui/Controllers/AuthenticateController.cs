@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using app.service;
 using app.service.Identity.Commands.CreateNewAccount;
+using app.service.Identity.Commands.Login;
+using app.service.Identity.Query.FindByName;
 using Microsoft.AspNetCore.Mvc;
 
 namespace app.ui.Controllers
@@ -44,10 +46,10 @@ namespace app.ui.Controllers
                         return RedirectToAction("Login");
                     }
 
-                    account.Role = "Invalid";
+                    account.ErrorMessage = "Invalid";
                     return View(account);
                 }
-                else account.Role = "PasswordNotMatch";
+                else account.ErrorMessage = "PasswordNotMatch";
                 return View(account);
 
             }
@@ -60,30 +62,28 @@ namespace app.ui.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(string username, string password)
+        public IActionResult Login(LoginCommand account)
         {
             var user = _identityService.FindByName(
-                new app.service.Identity.Query.FindByName.FindByNameQuery
+                new FindByNameQuery
                 {
-                    UserName = username
+                    UserName = account.Username
                 });
 
-            if (user != null)
-            {
-                var result = _identityService.Login(
-                    new app.service.Identity.Commands.Login.LoginCommand
-                    {
-                        Username = username,
-                        Password = password
-                    }).Result;
-                
-                if (result.Succeeded)
+            var result = _identityService.Login(
+                new LoginCommand
                 {
-                    return RedirectToAction("Success");
-                }
+                    Username = account.Username,
+                    Password = account.Password
+                }).Result;
+                
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Success");
             }
 
-            return View();
+            account.ErrorMessage = "Failed";
+            return View(account);
         }
 
         public IActionResult Success()

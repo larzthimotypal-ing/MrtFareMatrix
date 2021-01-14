@@ -1,16 +1,30 @@
-﻿@{
+﻿@model app.service.Identity.Commands.Login.LoginCommand
+@{
     ViewData["Title"] = "Login";
 }
 
 
-<form asp-action="Login" method="post">
-    <div>
-        <label for="username">Username</label>
-        <input type="text" name="username"/>
+<div class="container--login">
+    <div class="login--svg">
+        <img src="~/img/Log-In Page.png" alt="Alternate Text" />
     </div>
-    <div>
-        <label for="password">Password</label>
-        <input type="password" name="password" minlength ="6"/>
+    <div class="login--form">
+        
+        <h1 class="login--form--header">Login to Your Account</h1>
+
+        @if (Model != null)
+        {
+            <div class="login-alert--error">
+            @if (Model.ErrorMessage == "Failed")
+            {
+                <p>Incorrect Username or Password</p>
+            }
+            </div>
+        }
+        <form asp-controller="Authenticate" asp-action="Login" method="post">
+            <input asp-for="Username" type="text" name="username" placeholder="Username"/>
+            <input asp-for="Password" type="password" name="password" minlength="6" placeholder="Password"/>
+            <button type="submit" class="btn-primary--rectangle">Login</button>
+        </form>
     </div>
-    <button type="submit" class="btn-primary--rectangle--long">Login</button>
-</form>
+</div>

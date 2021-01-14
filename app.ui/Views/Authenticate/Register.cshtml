@@ -7,11 +7,11 @@
         @if (Model != null)
          {
             <div class="form-alert--error">
-                @if (Model.Role == "Invalid")
+                @if (Model.ErrorMessage == "Invalid")
                  {
                     <p>Make sure you have a valid username and password</p>
                  }
-                 else if (Model.Role == "PasswordNotMatch")
+                 else if (Model.ErrorMessage == "PasswordNotMatch")
                  {
                     <p>Your Password and Confirm Password Did Not Match</p>
                  }
