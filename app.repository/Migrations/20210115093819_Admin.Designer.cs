@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using app.repository;
 
 namespace app.repository.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210115093819_Admin")]
+    partial class Admin
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -408,15 +410,15 @@ namespace app.repository.Migrations
                         {
                             Id = "02174cf0–9412–4cfe - afbf - 59f706d72cf6",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "00c32901-a10e-4574-b0f9-f7f7ac43d7d4",
+                            ConcurrencyStamp = "d9297bda-5a7d-4b2f-9934-3ebf1839c7a2",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIsamAwkdelwfv8bR9TePFGch9rseVLdnyzwXSm7ZQ8Jo3WbBPdCLlwz0OjWKcW7nQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELnjM/bg4HXOvWVpGpaULnxMpzQSs0S/f+EbaM1Im5CfeT7FnHfP8OdTZADrh10klw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "0e0e3376-01f4-45bf-adfe-1d98646e5057",
+                            SecurityStamp = "c451781a-c6ef-4e3e-9781-0f13305867c0",
                             TwoFactorEnabled = false,
                             UserName = "admin",
                             FirstName = "admin",

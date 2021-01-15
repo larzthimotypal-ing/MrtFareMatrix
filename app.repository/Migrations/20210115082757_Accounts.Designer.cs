@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using app.repository;
 
 namespace app.repository.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210115082757_Accounts")]
+    partial class Accounts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -255,133 +257,6 @@ namespace app.repository.Migrations
                     b.ToTable("accounts");
                 });
 
-            modelBuilder.Entity("app.domain.Admin", b =>
-                {
-                    b.Property<int>("AdminID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("AccountsID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("AppUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("BlockedUsers")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("CardsID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DestinationID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("DisabledAccounts")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("AdminID");
-
-                    b.HasIndex("AccountsID");
-
-                    b.HasIndex("AppUserId");
-
-                    b.HasIndex("CardsID");
-
-                    b.HasIndex("DestinationID");
-
-                    b.ToTable("admin");
-                });
-
-            modelBuilder.Entity("app.domain.Cards", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AccountID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("AccountsID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CardClassifications")
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
-
-                    b.Property<float>("CreditPoints")
-                        .HasColumnType("real");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("ExpirationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("StolenCards")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("UsageNumber")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("AccountsID");
-
-                    b.ToTable("cards");
-                });
-
-            modelBuilder.Entity("app.domain.Destination", b =>
-                {
-                    b.Property<int>("DestinationID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("ArrivalTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DepartureTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("EstimatedTravelTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<float>("Fare")
-                        .HasColumnType("real");
-
-                    b.Property<int?>("IssueID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RailStations")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("DestinationID");
-
-                    b.HasIndex("IssueID");
-
-                    b.ToTable("destination");
-                });
-
-            modelBuilder.Entity("app.domain.Issue", b =>
-                {
-                    b.Property<int>("IssueID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Problem")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("ReorderedTime")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("IssueID");
-
-                    b.ToTable("issue");
-                });
-
             modelBuilder.Entity("app.domain.AppUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
@@ -408,15 +283,15 @@ namespace app.repository.Migrations
                         {
                             Id = "02174cf0–9412–4cfe - afbf - 59f706d72cf6",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "00c32901-a10e-4574-b0f9-f7f7ac43d7d4",
+                            ConcurrencyStamp = "4da428f1-9e25-47c7-9b58-2996997636c6",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIsamAwkdelwfv8bR9TePFGch9rseVLdnyzwXSm7ZQ8Jo3WbBPdCLlwz0OjWKcW7nQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIE0ncXCIdEnZwRme/CEF24IKs8qHLJ903bNma3FLtWzuBir1LdLTEPSJP/uQuJEdQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "0e0e3376-01f4-45bf-adfe-1d98646e5057",
+                            SecurityStamp = "3e20ff3b-5881-4ab2-9858-385aae43a91b",
                             TwoFactorEnabled = false,
                             UserName = "admin",
                             FirstName = "admin",
@@ -474,39 +349,6 @@ namespace app.repository.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("app.domain.Admin", b =>
-                {
-                    b.HasOne("app.domain.Accounts", "Accounts")
-                        .WithMany()
-                        .HasForeignKey("AccountsID");
-
-                    b.HasOne("app.domain.AppUser", "AppUser")
-                        .WithMany()
-                        .HasForeignKey("AppUserId");
-
-                    b.HasOne("app.domain.Cards", "Cards")
-                        .WithMany()
-                        .HasForeignKey("CardsID");
-
-                    b.HasOne("app.domain.Destination", "Destination")
-                        .WithMany()
-                        .HasForeignKey("DestinationID");
-                });
-
-            modelBuilder.Entity("app.domain.Cards", b =>
-                {
-                    b.HasOne("app.domain.Accounts", "Accounts")
-                        .WithMany()
-                        .HasForeignKey("AccountsID");
-                });
-
-            modelBuilder.Entity("app.domain.Destination", b =>
-                {
-                    b.HasOne("app.domain.Issue", "Issue")
-                        .WithMany()
-                        .HasForeignKey("IssueID");
                 });
 #pragma warning restore 612, 618
         }

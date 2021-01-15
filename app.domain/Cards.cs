@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 namespace app.domain
 {
-    class Cards : BaseEntity
+    public class Cards : BaseEntity
     {
         [DisplayName("Account ID")]
         public int AccountID { get; set; }
@@ -30,6 +30,9 @@ namespace app.domain
         [Display(Name = "Expiration Date")]
         [DataType(DataType.Date)]
         public DateTime ExpirationDate { get; set; }
+
+        [DisplayName("Stolen Cards")]
+        public bool StolenCards { get; set; }
 
     }
 }

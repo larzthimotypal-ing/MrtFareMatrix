@@ -14,6 +14,12 @@ namespace app.repository
         }
 
         public DbSet<AppUser> appUsers { get; set; }
+        public DbSet<Accounts> accounts { get; set; }
+        public DbSet<Admin> admin { get; set; }
+        public DbSet<Cards> cards { get; set; }
+        public DbSet<Destination> destination { get; set; }
+        public DbSet<Issue> issue { get; set; }
+        
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
