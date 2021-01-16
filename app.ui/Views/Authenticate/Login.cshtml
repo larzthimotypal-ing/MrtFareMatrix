@@ -15,9 +15,12 @@
         @if (Model != null)
         {
             <div class="login-alert--error">
-            @if (Model.ErrorMessage == "Failed" && Model.ErrorMessage == "Empty")
+            @if (Model.ErrorMessage == "Failed" || Model.ErrorMessage == "Empty")
             {
                 <p>Incorrect Username or Password</p>
+            }else if (Model.ErrorMessage == "NotFound")
+            {
+                <p>Account Not Found</p>
             }
             </div>
         }

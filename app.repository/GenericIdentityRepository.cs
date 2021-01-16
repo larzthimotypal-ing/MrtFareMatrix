@@ -37,9 +37,9 @@ namespace app.repository
             return await _userManager.CreateAsync(user, password);
         }
 
-        public void SignOut()
+        public async void SignOut()
         {
-            throw new NotImplementedException();
+            await _signInManager.SignOutAsync();
         }
 
     }

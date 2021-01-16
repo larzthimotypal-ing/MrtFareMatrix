@@ -71,11 +71,20 @@ namespace app.ui.Controllers
                 account.ErrorMessage = "Empty";
                 return View(account);
             }
-            var user = _identityService.FindByName(
-                new FindByNameQuery
-                {
-                    UserName = account.Username
-                });
+
+            var creds = new FindByNameQuery
+            {
+                UserName = account.Username
+            };
+
+            var user = _identityService.FindByName(creds);
+
+            if (user.User == null)
+            {
+                account.ErrorMessage = "NotFound";
+                return View(account);
+            }
+            
 
             var result = _identityService.Login(
                 new LoginCommand
@@ -94,13 +103,15 @@ namespace app.ui.Controllers
                 {
                     return RedirectToAction("Guest");
                 }
+
+                return RedirectToAction("Success");
+
             }
 
             account.ErrorMessage = "Failed";
             return View(account);
         }
 
-        [Authorize(Policy = "Claim.AdminAccess")]
         public IActionResult Success()
         {
             return View();
@@ -118,6 +129,12 @@ namespace app.ui.Controllers
         public IActionResult Guest()
         {
             return View();
+        }
+
+        public IActionResult SignOut()
+        {
+            _identityService.SignOut();
+            return RedirectToAction("Login");
         }
     }
 }

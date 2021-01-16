@@ -34,6 +34,11 @@ namespace app.ui
             services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            //services.AddDbContext<AppDbContext>(config =>
+            //{
+            //    config.UseInMemoryDatabase("Memory");
+            //});
+
             services.AddIdentity<AppUser, IdentityRole>(config =>
             {
                 //configuring password
