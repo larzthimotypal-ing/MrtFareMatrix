@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using app.repository;
 
 namespace app.repository.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210115093835_Destination")]
+    partial class Destination
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -408,15 +410,15 @@ namespace app.repository.Migrations
                         {
                             Id = "02174cf0–9412–4cfe - afbf - 59f706d72cf6",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "00c32901-a10e-4574-b0f9-f7f7ac43d7d4",
+                            ConcurrencyStamp = "7f8f6341-08da-431d-bed9-5f3605f12378",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIsamAwkdelwfv8bR9TePFGch9rseVLdnyzwXSm7ZQ8Jo3WbBPdCLlwz0OjWKcW7nQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELP+TkX5b2bR6JWjn6djZk6imkaVeJYR7h/XptUDTiEDU3N9+Jig9C+3R5iTR8sxiQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "0e0e3376-01f4-45bf-adfe-1d98646e5057",
+                            SecurityStamp = "ad546ed7-024b-4111-b9fe-4c3ab16844f7",
                             TwoFactorEnabled = false,
                             UserName = "admin",
                             FirstName = "admin",
