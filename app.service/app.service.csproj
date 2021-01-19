@@ -1,8 +1,15 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>69f76397-608c-4887-9bcc-862ae9f83db6</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.10" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="3.1.0" />
+    <PackageReference Include="SendGrid" Version="9.22.0" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\app.repository\app.repository.csproj" />

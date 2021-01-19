@@ -17,6 +17,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
+
+
+using SendGrid;
+
+
+
 namespace app.ui
 {
     public class Startup
@@ -70,7 +76,8 @@ namespace app.ui
 
             services.AddScoped<IUserClaimsPrincipalFactory<AppUser>, MyUserClaimsPrincipalFactory>();
 
-
+            services.AddTransient<EmailSender, EmailSender>();
+            services.Configure<AuthMessageSenderOptions>(Configuration);
 
             services.AddControllersWithViews();
         }
