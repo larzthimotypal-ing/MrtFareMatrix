@@ -10,12 +10,17 @@ using app.service.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NETCore.MailKit.Extensions;
+using NETCore.MailKit.Infrastructure.Internal;
 
 namespace app.ui
 {
@@ -46,6 +51,7 @@ namespace app.ui
                 config.Password.RequireDigit = false;
                 config.Password.RequireNonAlphanumeric = false;
                 config.Password.RequireUppercase = false;
+                config.SignIn.RequireConfirmedEmail = true;
             })
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders()
@@ -70,7 +76,7 @@ namespace app.ui
 
             services.AddScoped<IUserClaimsPrincipalFactory<AppUser>, MyUserClaimsPrincipalFactory>();
 
-
+            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
             services.AddControllersWithViews();
         }
@@ -97,7 +103,7 @@ namespace app.ui
 
             app.UseAuthorization();
 
-            app.UseStatusCodePagesWithRedirects("~/Authenticate/AccessDenied");
+            app.UseStatusCodePagesWithRedirects("~/Authenticate/Error404");
 
             app.UseEndpoints(endpoints =>
             {

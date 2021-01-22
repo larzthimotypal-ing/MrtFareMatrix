@@ -23,6 +23,8 @@
         
         &--header{
             margin-bottom: 35px;
+            line-height: 1.2;
+            text-align: center;
         }
 
         form{
@@ -58,6 +60,38 @@
                 margin-bottom: 0;
             }
         }
+        
+    }
+}
+
+@media screen and (max-width: 992px)
+{
+    .container--login{
+
+        margin-top: 40px;
+        .login--svg{
+            display: none;
+        }
+
+        .login--form{
+            margin: auto;
+            width: 60%;
+            min-width: 200px;
+            font-size: 1rem;
+
+            &--header{
+                font-size: 1.2rem;
+                font-weight: 500;
+            }
+
+            form{
+                button{
+                    min-width: 120px;
+                }
+            }
+            
+        }
+        
         
     }
 }

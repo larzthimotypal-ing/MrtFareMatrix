@@ -1,0 +1,231 @@
+@import "_color--config.scss";
+
+.wrapper{
+    position: absolute;
+    top: 0%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 100%;
+    z-index: 100;
+    .navbar{
+        width:  100%;
+        background: $navbar-bg--color;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 10vw;
+        min-height: 10vh;
+
+        a{
+            color: $navbar-txt--color;
+        }
+
+        .right{
+            display: flex;
+            
+            .nav-items{
+                display: flex;
+                margin-right: 40px;
+
+                li{
+                    margin: 0 15px;
+                }
+            }
+
+            .user-profile{
+                .user-profile--pic{
+                    width: 40px;
+                }
+            }
+
+            .home--mob{
+                display: none;
+            }
+        }
+
+        .left ul,
+        .right ul li a,
+        .left .logo,
+        .right a{
+            display: flex;
+            height: 40px;
+            align-items: center;
+            font-weight: 600;
+        }
+
+        .left .logo{
+            font-size: 1.2rem;
+        }
+
+        .left{
+            color: $navbar-txt--color;
+        }
+
+        .left ul li,
+        .right img{
+            margin: 0 10px;
+        }
+
+        .right a{
+            text-align: right;
+
+            span{
+                font-size: 10px;
+            }
+
+            .nav-icon{
+                width: 30px;
+            }
+        }
+
+        .right ul li{
+            position: relative;
+            span{
+                font-size: 1rem;
+            }
+
+            .dropdown,
+            .dropdown--mob{
+                position: absolute;
+                top: 70px;
+                right: 0;
+                background: $navbar-bg--color;
+                padding: 10px 25px;
+                border-radius: 5px;
+                display: none;
+
+                .fas{
+                    margin-right: 5px;
+                }
+
+                .mob-nav--link{
+                    display: none;
+                }
+
+            }
+
+            .dropdown:before{
+                content: "";
+                position: absolute;
+                top: -16px;
+                left: 50%;
+                transform: translateX(-50%);
+                border: 10px solid;
+                border-color: transparent transparent $navbar-bg--color transparent;
+            }
+            
+        }
+
+        .right ul li.active .dropdown{
+            display: block;
+        }
+
+
+    }
+}
+
+.brand--mob{
+    display: none;
+}
+@media screen and (max-width: 992px){
+
+    .wrapper .navbar{
+        padding: 0 6vw;
+
+        .left{
+            .logo{
+                display: none;
+            }
+        }
+
+        .right{
+            width: 100%;
+
+            .home--mob{
+                display: block;
+            }
+
+            .user-profile{
+                margin-left: auto;
+            }
+        }
+        
+    }
+
+    .wrapper .navbar .right ul .dropdown li.mob-nav--link{
+        display: block;
+    }
+
+    .wrapper .navbar .right .nav-items{
+
+        margin-right: 15px;
+
+        a{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        img{
+            width: 15px;
+        }
+        span{
+            font-size: .8rem;
+        }
+        
+    }
+
+    .brand--mob{
+        display: block;
+        width: 100%;
+        text-align: center;
+        h1{
+            margin: 100px 0 0;
+        }
+       
+    }
+
+    .wrapper .navbar .right .user-profile{
+
+        .user-profile--name{
+            font-size: .8rem;
+        }
+        .user-profile--role{
+            font-size: .6rem;
+        }
+
+        .user-profile--pic{
+            width: 25px;
+        }
+    }
+
+}
+
+@media screen and (max-width: 768px){
+
+    .wrapper .navbar .right .user-profile{
+
+        .user-profile--name{
+            display: none;
+        }
+        .user-profile--role{
+            display: none;
+        }
+    }
+}
+
+@media screen and (max-width: 425px){
+
+    .wrapper .navbar{
+        min-height: 8vh;
+        .right .nav-items{
+            margin-right: 0;
+            max-width: 40px;
+            span{
+                font-size: .6rem;
+            }
+        }
+
+    }
+}
+

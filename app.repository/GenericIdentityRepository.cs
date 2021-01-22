@@ -4,6 +4,8 @@ using System.Text;
 using System.Threading.Tasks;
 using app.domain;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace app.repository
 {
@@ -40,6 +42,24 @@ namespace app.repository
         public async void SignOut()
         {
             await _signInManager.SignOutAsync();
+        }
+
+        public async Task<string> GenerateEmailConfirmationToken(AppUser user)
+        {
+            var token =  await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+            return token;
+        }
+
+        public async Task<IdentityResult> VerifyEmailResult(string userId, string code)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null) return IdentityResult.Failed(new IdentityError { Code = "0001", Description = "User Not Found"});
+            code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
+            var response = await _userManager.ConfirmEmailAsync(user, code);
+            return response;
+
         }
 
     }

@@ -9,5 +9,6 @@ namespace app.service.Identity.Commands.CreateNewAccount
     public class CreateNewAccountResult
     {
         public IdentityResult Result { get; set; }
+        public string Link { get; set; }
     }
 }

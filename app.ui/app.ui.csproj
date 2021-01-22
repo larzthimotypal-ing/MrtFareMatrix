@@ -10,10 +10,16 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="NETCore.MailKit" Version="2.0.3" />
+    <PackageReference Include="SendGrid" Version="9.22.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\app.service\app.service.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\img\icon\" />
   </ItemGroup>
 
 </Project>

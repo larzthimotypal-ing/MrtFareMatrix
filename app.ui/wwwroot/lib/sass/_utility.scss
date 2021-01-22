@@ -3,6 +3,8 @@
 *{
     box-sizing:border-box;
     margin:0;
+    padding: 0;
+    list-style: none;
     font-family: $font-stack;
 }
 a{
@@ -17,6 +19,7 @@ body{
     // @include set-bg-color(--body--bg-color,$text-color--light,$text-color--night);
     background-color: var(--body--bg-color);
     color: var(--body--text-color);
+    margin-top: 12vh;
 }
 .container{
     overflow: auto;

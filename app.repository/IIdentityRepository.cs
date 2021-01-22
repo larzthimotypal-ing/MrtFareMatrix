@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using app.domain;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 
 namespace app.repository
 {
@@ -13,5 +14,7 @@ namespace app.repository
         Task<SignInResult> LoginResult(string username, string password, bool persistence, bool lockout);
         void SignOut();
         Task<AppUser> FindByName(string username);
+        Task<string> GenerateEmailConfirmationToken(AppUser user);
+        Task<IdentityResult> VerifyEmailResult(string userId, string code); 
     }
 }
