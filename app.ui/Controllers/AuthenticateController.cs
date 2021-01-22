@@ -76,7 +76,7 @@ namespace app.ui.Controllers
                         msg.SetClickTracking(false, false);
                         var response = await client.SendEmailAsync(msg);
 
-                        return RedirectToAction("EmailVerification");
+                        return RedirectToAction("EmailConfirmation");
                     }
 
                     account.ErrorMessage = "Invalid";
@@ -167,7 +167,7 @@ namespace app.ui.Controllers
             return RedirectToAction("Error404");
         }
 
-        public IActionResult EmailVerification() => View();
+        public IActionResult EmailConfirmation() => View();
 
         public IActionResult Success()
         {

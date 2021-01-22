@@ -1,0 +1,50 @@
+.container--emailCon{
+    width: 600px;
+    background-color: #2c6181;
+    margin: auto;
+    border-radius: 20px;
+    margin-top: 160px;
+    -webkit-box-shadow: -3px 7px 23px 1px rgba(179,179,179,1);
+    -moz-box-shadow: -3px 7px 23px 1px rgba(179,179,179,1);
+    box-shadow: -3px 7px 23px 1px rgba(179,179,179,1);
+    text-align: center;
+    padding: 120px 60px;
+    color: $text--color--white;
+    position: relative;
+    
+    h3{
+        margin: 1rem;
+    }
+
+    .confetti{
+        width: 350px;
+        position: absolute;
+        top: -30px;
+        left: 100px;
+        pointer-events: none;
+    }
+
+}
+
+@media screen and (max-width: 992px){
+    .container--emailCon{
+        margin-top: 40px;
+        max-width: 500px;
+        width: 80%;
+        padding: 100px 40px;
+        .confetti{
+            width: 300px;
+            left: 80px;
+        }
+    }
+}
+
+@media screen and (max-width: 425px){
+
+    .container--emailCon .confetti{
+        width: 220px;
+        left: 40px;
+    }
+}
+
+    
