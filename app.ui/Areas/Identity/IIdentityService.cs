@@ -15,7 +15,7 @@ namespace app.ui.Areas.Identity
     public interface IIdentityService
     {
         Task<CreateAccountResult> CreateAccount(CreateAccountCommand creds);
-        LogInResult Login(LogInCommand creds);
+        Task<LogInResult> Login(LogInCommand creds);
         void SignOut();
         CreateEmailVerificationTokenResult CreateEmailVerificationToken(AppUser user);
         Task<VerifyEmailResult> VerifyEmail(string userId, string code);

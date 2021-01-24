@@ -109,14 +109,13 @@ namespace app.ui.Areas.Identity.CQRS
                 var emailConfig = new SendEmailVerificationCommand
                 {
                     Link = CreateEmailVerificationToken(newUser).Link,
-                    ApiKey = GetValueInSection("Email","SendGridApiKey"),
-                    SenderEmail = GetValueInSection("Email", "SenderEmail"),
-                    SenderName = GetValueInSection("Email", "SenderName"),
+                    ApiKey = GetValueInSection("EmailConfig","SendGridApiKey"),
+                    SenderEmail = GetValueInSection("EmailConfig", "SenderEmail"),
+                    SenderName = GetValueInSection("EmailConfig", "SenderName"),
                     ReceiverEmail = newUser.Email,
                     ReceiverName = newUser.FirstName,
                     Subject = GetValueInSection("EmailVerification","Subject"),
-                    TextContent = GetValueInSection("EmailVerification","TextContent"),
-                    HtmlContent = GetValueInSection("EmailVerification","HtmlContent")
+                    TextContent = GetValueInSection("EmailVerification","TextContent")
                 };
 
                 var response = SendEmailVerification(emailConfig).Result.Response;
@@ -135,13 +134,13 @@ namespace app.ui.Areas.Identity.CQRS
             };
         }
 
-        public LogInResult Login(LogInCommand creds)
+        public async Task<LogInResult> Login(LogInCommand creds)
         {
             if (creds.Username == null || creds.Password == null)
             {
                 return new LogInResult {Status = "Empty"};
             }
-            var user = _userManager.FindByNameAsync(creds.Username);
+            var user = await _userManager.FindByNameAsync(creds.Username);
 
             if (user == null)
             {    
@@ -149,7 +148,7 @@ namespace app.ui.Areas.Identity.CQRS
             }
 
             var persistence = false;
-            var result = _signInManager.PasswordSignInAsync(creds.Username, creds.Password, persistence, false).Result;
+            var result = await _signInManager.PasswordSignInAsync(creds.Username, creds.Password, persistence, false);
 
             if (result.Succeeded)
             {
@@ -189,6 +188,8 @@ namespace app.ui.Areas.Identity.CQRS
             var client = new SendGridClient(config.ApiKey);
             var from = new EmailAddress(config.SenderEmail, config.SenderName);
             var to = new EmailAddress(config.ReceiverEmail, config.ReceiverName);
+            config.HtmlContent = "<a href =" + config.Link + "> Click this to verify account</a>";
+
             var msg = MailHelper.CreateSingleEmail(
                 from,
                 to,

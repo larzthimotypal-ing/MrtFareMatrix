@@ -34,7 +34,7 @@ namespace app.ui.Areas.Identity.Controllers
 
                 if (result == "Success")
                 {
-                    return RedirectToRoute(new { area = "Identity", controller = "Authenticate", action = "EmailConfirmation" });
+                    return RedirectToAction("EmailConfirmation");
                 }
                 else
                 {
@@ -59,24 +59,20 @@ namespace app.ui.Areas.Identity.Controllers
         [HttpPost]
         public IActionResult LogIn(LogInCommand creds)
         {
-            var result = _identityService.Login(creds).Status;
-            if (result == "Succeeded")
+            var result = _identityService.Login(creds).Result.Status;
+            if (result == "Success")
             {
+                if (User.HasClaim("MRT.AccessLevel", "Admin"))
+                {
+                    return RedirectToAction("Admin");
+                }
+                else if (User.HasClaim("MRT.AccessLevel", "Guest"))
+                {
+                    return RedirectToAction("Guest");
+                }
                 return RedirectToAction("Success");
+
             }
-
-            //if (result.Succeeded)
-            //{
-            //    if (User.HasClaim("MRT.AccessLevel", "Admin"))
-            //    {
-            //        return RedirectToAction("Admin");
-            //    }
-            //    else if (User.HasClaim("MRT.AccessLevel", "Guest"))
-            //    {
-            //        return RedirectToAction("Guest");
-            //    }
-
-            //}
 
             creds.ErrorMessage = result;
             return View(creds);
@@ -100,6 +96,21 @@ namespace app.ui.Areas.Identity.Controllers
         {
             _identityService.SignOut();
             return RedirectToAction("Login");
+        }
+
+        public IActionResult Admin()
+        {
+            return View();
+        }
+
+        public IActionResult Guest()
+        {
+            return View();
+        }
+
+        public IActionResult Success()
+        {
+            return View();
         }
     }
 }

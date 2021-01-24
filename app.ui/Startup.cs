@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using app.repository;
-using app.service;
-using app.service.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -17,8 +15,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using NETCore.MailKit.Extensions;
-using NETCore.MailKit.Infrastructure.Internal;
 
 namespace app.ui
 {
@@ -64,8 +60,8 @@ namespace app.ui
             //    });
             //});
 
-            services.AddScoped(typeof(IIdentityRepository<>), typeof(GenericIdentityRepository<>));
-            services.AddTransient<IIdentityService, IdentityService>();
+            //services.AddScoped(typeof(IIdentityRepository<>), typeof(GenericIdentityRepository<>));
+            //services.AddTransient<IIdentityService, IdentityService>();
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
             //services.AddScoped<IUserClaimsPrincipalFactory<AppUser>, MyUserClaimsPrincipalFactory>();

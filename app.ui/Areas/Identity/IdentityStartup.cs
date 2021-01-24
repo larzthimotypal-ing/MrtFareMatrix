@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using app.repository;
+using app.ui.Areas.Identity.CQRS;
 using app.ui.Areas.Identity.Data;
 using app.ui.Areas.Identity.Models;
 using Microsoft.AspNetCore.Hosting;
@@ -43,7 +44,7 @@ namespace app.ui.Areas.Identity
                 services.ConfigureApplicationCookie(config =>
                 {
                     config.Cookie.Name = "Identity.Cookie";
-                    config.LoginPath = "Identity/Authenticate/Login";
+                    config.LoginPath = "/Identity/Authenticate/Login";
                 });
 
                 services.AddAuthorization(config =>
@@ -55,6 +56,7 @@ namespace app.ui.Areas.Identity
                 });
 
                 services.AddScoped<IUserClaimsPrincipalFactory<AppUser>, MyUserClaimsPrincipalFactory>();
+                services.AddScoped<IIdentityService, IdentityService>();
             });
 
         }

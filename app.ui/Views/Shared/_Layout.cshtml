@@ -93,7 +93,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#">
+                                            <a asp-area="Identity" asp-controller="Authenticate" asp-action="SignOut">
                                                 <i class="fas fa-sign-out-alt"></i>
                                                 Signout
                                             </a>
@@ -105,7 +105,7 @@
                         }
                         else
                         {
-                            if (ViewContext.RouteData.Values["action"].ToString() == "Login")
+                            if (ViewContext.RouteData.Values["action"].ToString() == "LogIn")
                             {
                                 <a asp-area="Identity" asp-controller="Authenticate" asp-action="Register">Register</a>
                             }

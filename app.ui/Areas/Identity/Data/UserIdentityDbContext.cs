@@ -15,6 +15,7 @@ namespace app.ui.Areas.Identity.Data
         {
         }
 
+        public DbSet<AppUser> AppUsers { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

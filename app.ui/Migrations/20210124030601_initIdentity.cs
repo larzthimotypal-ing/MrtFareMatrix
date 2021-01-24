@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace app.repository.Migrations
+namespace app.ui.Migrations
 {
     public partial class initIdentity : Migration
     {
@@ -40,10 +40,9 @@ namespace app.repository.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    Discriminator = table.Column<string>(nullable: false),
-                    FirstName = table.Column<string>(maxLength: 60, nullable: true),
-                    LastName = table.Column<string>(maxLength: 60, nullable: true),
-                    Role = table.Column<string>(maxLength: 60, nullable: true)
+                    FirstName = table.Column<string>(maxLength: 60, nullable: false),
+                    LastName = table.Column<string>(maxLength: 60, nullable: false),
+                    Role = table.Column<string>(maxLength: 60, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -155,6 +154,11 @@ namespace app.repository.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Role", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "02174cf0–9412–4cfe - afbf - 59f706d72cf6", 0, "ccc41998-1f94-48a9-9bf1-b4f7582a34ad", "admin@gmail.com", true, "admin", "admin", false, null, "ADMIN@GMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEHz5WNLoakgmwFYtG9JkxuFBL0QDNNxniWX6v2V46PhLK+PVglFIDA13kozXDVKjKw==", null, false, "Admin", "c256a2f4-1995-4698-a1d0-87cc776e4491", false, "admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

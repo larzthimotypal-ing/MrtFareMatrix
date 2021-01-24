@@ -5,14 +5,32 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20210112133337_initIdentity.cs" />
+    <Compile Remove="Migrations\20210112133337_initIdentity.Designer.cs" />
     <Compile Remove="Migrations\20210114125826_seedAdmin.cs" />
     <Compile Remove="Migrations\20210114125826_seedAdmin.Designer.cs" />
+    <Compile Remove="Migrations\20210114130432_seedAdmin.cs" />
+    <Compile Remove="Migrations\20210114130432_seedAdmin.Designer.cs" />
+    <Compile Remove="Migrations\20210114160647_add.cs" />
+    <Compile Remove="Migrations\20210114160647_add.Designer.cs" />
+    <Compile Remove="Migrations\20210115082757_Accounts.cs" />
+    <Compile Remove="Migrations\20210115082757_Accounts.Designer.cs" />
+    <Compile Remove="Migrations\20210115083650_Cards.cs" />
+    <Compile Remove="Migrations\20210115083650_Cards.Designer.cs" />
+    <Compile Remove="Migrations\20210115093819_Admin.cs" />
+    <Compile Remove="Migrations\20210115093819_Admin.Designer.cs" />
+    <Compile Remove="Migrations\20210115093835_Destination.cs" />
+    <Compile Remove="Migrations\20210115093835_Destination.Designer.cs" />
+    <Compile Remove="Migrations\20210115093854_Issue.cs" />
+    <Compile Remove="Migrations\20210115093854_Issue.Designer.cs" />
     <Compile Remove="Migrations\20210121195620_fix.cs" />
     <Compile Remove="Migrations\20210121195620_fix.Designer.cs" />
     <Compile Remove="Migrations\20210121200040_fix1.cs" />
     <Compile Remove="Migrations\20210121200040_fix1.Designer.cs" />
     <Compile Remove="Migrations\20210121200503_fix2.cs" />
     <Compile Remove="Migrations\20210121200503_fix2.Designer.cs" />
+    <Compile Remove="Migrations\20210124030413_init.cs" />
+    <Compile Remove="Migrations\20210124030413_init.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,11 +54,14 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.11" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\app.domain\app.domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>
