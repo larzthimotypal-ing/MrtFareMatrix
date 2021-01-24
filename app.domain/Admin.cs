@@ -16,9 +16,9 @@ namespace app.domain
 
         public Cards Cards { get; set; }
 
-       public AppUser AppUser { get; set; }
+        //public AppUser AppUser { get; set; }
         
-       public Destination Destination { get; set; }
+        public Destination Destination { get; set; }
 
         [DisplayName("Blocked Users")]
         public string BlockedUsers { get; set; }

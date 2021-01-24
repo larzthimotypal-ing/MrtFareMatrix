@@ -12,13 +12,13 @@
 <body>
     @using Microsoft.AspNetCore.Identity;
     @using System.Security.Claims;
-    @using app.domain;
+    @using app.ui.Areas.Identity.Models 
 
-    @inject UserManager<app.domain.AppUser> _userManager
+    @inject UserManager<AppUser> _userManager
     <header class="wrapper">
         <nav class="navbar">
             <div class="left">
-                <div class="logo"><a asp-controller="Authenticate" asp-action="Login">
+                <div class="logo"><a asp-controller="Home" asp-action="Login">
                     MRT Fare Matrix
                 </a></div>
             </div>
@@ -107,11 +107,11 @@
                         {
                             if (ViewContext.RouteData.Values["action"].ToString() == "Login")
                             {
-                                <a asp-controller="Authenticate" asp-action="Register">Register</a>
+                                <a asp-area="Identity" asp-controller="Authenticate" asp-action="Register">Register</a>
                             }
                             else
                             {
-                                <a asp-controller="Authenticate" asp-action="Login">Log-in</a>
+                                <a asp-area="Identity" asp-controller="Authenticate" asp-action="Login">Log-in</a>
                             }
                         }
                     </li>

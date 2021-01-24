@@ -2,9 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using app.domain;
 using app.repository;
-using app.repository.AuthenticationAndAuthorization.Data;
 using app.service;
 using app.service.Identity;
 using Microsoft.AspNetCore.Authorization;
@@ -36,47 +34,41 @@ namespace app.ui
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AppDbContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddDbContext<AppDbContext>(options =>
+            //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            //services.AddDbContext<AppDbContext>(config =>
+            //services.AddIdentity<AppUser, IdentityRole>(config =>
             //{
-            //    config.UseInMemoryDatabase("Memory");
+            //    //configuring password
+            //    config.Password.RequiredLength = 6;
+            //    config.Password.RequireDigit = false;
+            //    config.Password.RequireNonAlphanumeric = false;
+            //    config.Password.RequireUppercase = false;
+            //    config.SignIn.RequireConfirmedEmail = true;
+            //})
+            //    .AddEntityFrameworkStores<AppDbContext>()
+            //    .AddDefaultTokenProviders()
+            //    .AddClaimsPrincipalFactory<MyUserClaimsPrincipalFactory>();
+
+            //services.ConfigureApplicationCookie(config =>
+            //{
+            //    config.Cookie.Name = "Identity.Cookie";
+            //    config.LoginPath = "/Authenticate/Login";
             //});
 
-            services.AddIdentity<AppUser, IdentityRole>(config =>
-            {
-                //configuring password
-                config.Password.RequiredLength = 6;
-                config.Password.RequireDigit = false;
-                config.Password.RequireNonAlphanumeric = false;
-                config.Password.RequireUppercase = false;
-                config.SignIn.RequireConfirmedEmail = true;
-            })
-                .AddEntityFrameworkStores<AppDbContext>()
-                .AddDefaultTokenProviders()
-                .AddClaimsPrincipalFactory<MyUserClaimsPrincipalFactory>();
-
-            services.ConfigureApplicationCookie(config =>
-            {
-                config.Cookie.Name = "Identity.Cookie";
-                config.LoginPath = "/Authenticate/Login";
-            });
-
-            services.AddAuthorization(config =>
-            {
-                config.AddPolicy("Claim.AdminAccess", policyBuilder =>
-                {
-                    policyBuilder.RequireClaim("MRT.AccessLevel", "Admin");
-                });
-            });
+            //services.AddAuthorization(config =>
+            //{
+            //    config.AddPolicy("Claim.AdminAccess", policyBuilder =>
+            //    {
+            //        policyBuilder.RequireClaim("MRT.AccessLevel", "Admin");
+            //    });
+            //});
 
             services.AddScoped(typeof(IIdentityRepository<>), typeof(GenericIdentityRepository<>));
             services.AddTransient<IIdentityService, IdentityService>();
-
-            services.AddScoped<IUserClaimsPrincipalFactory<AppUser>, MyUserClaimsPrincipalFactory>();
-
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+
+            //services.AddScoped<IUserClaimsPrincipalFactory<AppUser>, MyUserClaimsPrincipalFactory>();
 
             services.AddControllersWithViews();
         }
@@ -107,9 +99,14 @@ namespace app.ui
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapAreaControllerRoute(
+                    name: "MyAreaIdentity",
+                    areaName: "Identity",
+                    pattern: "Identity/{controller=Login}/{action=Index}/{id?}");
+
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Authenticate}/{action=Login}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
