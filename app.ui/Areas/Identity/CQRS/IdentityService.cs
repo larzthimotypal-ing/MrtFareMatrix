@@ -8,6 +8,7 @@ using app.ui.Areas.Identity.CQRS.Command.CreateAccount;
 using app.ui.Areas.Identity.CQRS.Command.CreateEmailVerificationToken;
 using app.ui.Areas.Identity.CQRS.Command.LogIn;
 using app.ui.Areas.Identity.CQRS.Command.SendEmailVerification;
+using app.ui.Areas.Identity.CQRS.Command.SendPasswordResetEmail;
 using app.ui.Areas.Identity.CQRS.Command.VerifyEmail;
 using app.ui.Areas.Identity.CQRS.Queries.UserExists;
 using app.ui.Areas.Identity.Models;
@@ -52,19 +53,20 @@ namespace app.ui.Areas.Identity.CQRS
         }
 
         public CreateEmailVerificationTokenResult CreateEmailVerificationToken(AppUser user)
-        {
+        {   
+            //Generate Token
             var token = _userManager.GenerateEmailConfirmationTokenAsync(user).Result;
+            //Encode token
             var code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
-            
-
+            //Build link
             var link = UrlHelperExtensions.Action(
-                _urlHelper,
-                "VerifyEmail",
-                "Authenticate",
-                new { userId = user.Id, code },
-                "https",
-                "localhost:44347"
-                ) ;
+                _urlHelper,         /*Url Helper*/
+                "VerifyEmail",      /*Action*/
+                "Authenticate",     /*Controller*/
+                new { userId = user.Id, code },     /*Object Value*/
+                "https",        /*Scheme*/
+                "localhost:44347"   /*Host*/
+                );
 
             return new CreateEmailVerificationTokenResult
             {
@@ -176,10 +178,10 @@ namespace app.ui.Areas.Identity.CQRS
                     Succeeded = false
                 };
             }
+
             code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
             var response = await _userManager.ConfirmEmailAsync(user, code);
-
-
+            
             return new VerifyEmailResult
             {
                 Succeeded = response.Succeeded
@@ -227,6 +229,13 @@ namespace app.ui.Areas.Identity.CQRS
             {
                 Exists = false
             };
+        }
+
+        public Task<SendPasswordResetEmailResult> SendPasswordResetEmail(SendPasswordResetEmailCommand command)
+        {
+            // Crete Action Link 
+
+            throw new NotImplementedException();
         }
     }
 }
