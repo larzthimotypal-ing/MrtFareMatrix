@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using app.repository;
 using app.ui.Areas.Identity.CQRS;
 using app.ui.Areas.Identity.Data;
 using app.ui.Areas.Identity.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -49,14 +52,25 @@ namespace app.ui.Areas.Identity
 
                 services.AddAuthorization(config =>
                 {
-                    config.AddPolicy("Claim.AdminAccess", policyBuilder =>
+                    config.AddPolicy("BasicAccess", policyBuilder =>
                     {
-                        policyBuilder.RequireClaim("MRT.AccessLevel", "Admin");
+                        policyBuilder.RequireClaim("AccessLevel");
+                    });
+                    config.AddPolicy("ClientAccess", policyBuilder =>
+                    {
+                         policyBuilder.RequireClaim("AccessLevel", "Client");
+                    });
+                    config.AddPolicy("AdminAccess", policyBuilder =>
+                    {
+                        policyBuilder.RequireClaim("AccessLevel", "Admin");
                     });
                 });
 
+
                 services.AddScoped<IUserClaimsPrincipalFactory<AppUser>, MyUserClaimsPrincipalFactory>();
                 services.AddScoped<IIdentityService, IdentityService>();
+                services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+                
             });
 
         }

@@ -59,7 +59,7 @@
                     <li>
                         @if (User.Identity.IsAuthenticated)
                         {
-                            @if (User.HasClaim("MRT.AccessLevel", "Admin"))
+                            @if (User.HasClaim("AccessLevel", "Admin"))
                             {
                                 <a href="#">
                                     <p class="user-profile--name">John Doe<br /><span class="user-profile--role">Admin</span></p>

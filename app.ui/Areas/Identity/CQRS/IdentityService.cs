@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using app.ui.Areas.Identity.CQRS.Command.CreateAccount;
@@ -10,6 +11,7 @@ using app.ui.Areas.Identity.CQRS.Command.SendEmailVerification;
 using app.ui.Areas.Identity.CQRS.Command.VerifyEmail;
 using app.ui.Areas.Identity.CQRS.Queries.UserExists;
 using app.ui.Areas.Identity.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -40,6 +42,7 @@ namespace app.ui.Areas.Identity.CQRS
             _signInManager = signInManager;
             _urlHelper = urlHelperFactory.GetUrlHelper(actionContextAccessor.ActionContext);
             _config = config;
+            
         }
 
         //Getting the value using key value pair in a section inside appsettings
@@ -149,13 +152,13 @@ namespace app.ui.Areas.Identity.CQRS
 
             var persistence = false;
             var result = await _signInManager.PasswordSignInAsync(creds.Username, creds.Password, persistence, false);
-
+            
             if (result.Succeeded)
             {
-                return new LogInResult { Status = "Success" };
+                return new LogInResult { Status = "Success"};
             }
 
-            return new LogInResult { Status = "Failed" };
+            return new LogInResult { Status = "Failed"};
         }
 
         public async void SignOut()

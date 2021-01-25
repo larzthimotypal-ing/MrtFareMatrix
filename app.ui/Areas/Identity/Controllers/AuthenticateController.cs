@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using app.ui.Areas.Identity.CQRS.Command.CreateAccount;
 using app.ui.Areas.Identity.CQRS.Command.LogIn;
 using app.ui.Areas.Identity.CQRS.Command.VerifyEmail;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace app.ui.Areas.Identity.Controllers
@@ -28,7 +30,7 @@ namespace app.ui.Areas.Identity.Controllers
         {
             if (ModelState.IsValid)
             {
-                account.Role = "Guest";
+                account.Role = "Client";
 
                 var result = _identityService.CreateAccount(account).Result.Status;
 
@@ -61,17 +63,8 @@ namespace app.ui.Areas.Identity.Controllers
         {
             var result = _identityService.Login(creds).Result.Status;
             if (result == "Success")
-            {
-                if (User.HasClaim("MRT.AccessLevel", "Admin"))
-                {
-                    return RedirectToAction("Admin");
-                }
-                else if (User.HasClaim("MRT.AccessLevel", "Guest"))
-                {
-                    return RedirectToAction("Guest");
-                }
-                return RedirectToAction("Success");
-
+            {      
+                return RedirectToAction("RoleReroute");
             }
 
             creds.ErrorMessage = result;
@@ -98,19 +91,31 @@ namespace app.ui.Areas.Identity.Controllers
             return RedirectToAction("Login");
         }
 
+        [Authorize(Policy = "AdminAccess")]
         public IActionResult Admin()
         {
             return View();
         }
 
+        [Authorize(Policy = "BasicAccess")]
         public IActionResult Guest()
         {
             return View();
         }
 
-        public IActionResult Success()
+        public IActionResult RoleReroute()
         {
-            return View();
+            if (User.HasClaim("AccessLevel", "Admin"))
+            {
+                return RedirectToAction("Index", "Admin", new { area = "Admin" });
+            }
+            else if (User.HasClaim("AccessLevel", "Client"))
+            {
+                return RedirectToAction("Index", "Client", new { area = "Client" });
+            }
+
+            return RedirectToAction("LogIn");
         }
+
     }
 }

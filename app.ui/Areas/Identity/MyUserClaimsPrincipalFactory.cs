@@ -21,7 +21,7 @@ namespace app.ui.Areas.Identity
         protected override async Task<ClaimsIdentity> GenerateClaimsAsync(AppUser user)
         {
             var identity = await base.GenerateClaimsAsync(user);
-            identity.AddClaim(new Claim("MRT.AccessLevel", user.Role ?? ""));
+            identity.AddClaim(new Claim("AccessLevel", user.Role ?? ""));
             return identity;
         }
     }

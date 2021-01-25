@@ -62,7 +62,7 @@ namespace app.ui
 
             //services.AddScoped(typeof(IIdentityRepository<>), typeof(GenericIdentityRepository<>));
             //services.AddTransient<IIdentityService, IdentityService>();
-            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+            //services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
             //services.AddScoped<IUserClaimsPrincipalFactory<AppUser>, MyUserClaimsPrincipalFactory>();
 
@@ -91,7 +91,7 @@ namespace app.ui
 
             app.UseAuthorization();
 
-            app.UseStatusCodePagesWithRedirects("~/Authenticate/Error404");
+            app.UseStatusCodePagesWithRedirects("~/Home/Error404");
 
             app.UseEndpoints(endpoints =>
             {
@@ -99,6 +99,16 @@ namespace app.ui
                     name: "MyAreaIdentity",
                     areaName: "Identity",
                     pattern: "Identity/{controller=Login}/{action=Index}/{id?}");
+
+                endpoints.MapAreaControllerRoute(
+                    name: "MyAreaAdmin",
+                    areaName: "Admin",
+                    pattern: "Admin/{controller=Admin}/{action=Index}/{id?}");
+
+                endpoints.MapAreaControllerRoute(
+                    name: "MyAreaClient",
+                    areaName: "Client",
+                    pattern: "Client/{controller=Admin}/{action=Index}/{id?}");
 
                 endpoints.MapControllerRoute(
                     name: "default",

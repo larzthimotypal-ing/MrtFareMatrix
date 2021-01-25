@@ -9,5 +9,6 @@ namespace app.ui.Areas.Identity.CQRS.Command.LogIn
     public class LogInResult
     {
         public string Status { get; set; }
+        public bool IsAdmin { get; set; }
     }
 }
