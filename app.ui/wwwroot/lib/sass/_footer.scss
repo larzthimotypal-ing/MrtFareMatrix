@@ -1,0 +1,130 @@
+footer{
+    flex-shrink: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    color: $text--color--black;
+    .footer--main{
+        width: 100%;
+        padding: 20px 10%;
+        display: flex;
+        flex-direction: column;
+        background-color: rgb(247, 216, 82);
+        
+        .quickLinks{
+            display: flex;
+            flex-direction: column;
+            &--title{
+                font-size: 1rem;
+                font-weight: 700;
+            }
+            padding-bottom: 5px;
+            &--links
+            {
+                display: flex;
+                justify-content: space-around;
+                
+                &--left,
+                &--right{
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    margin: 10px;
+                    
+                    a{
+                        color: $text--color--black;
+                        font-weight: 500;
+                        padding: 0;
+                    }
+                }
+            }
+
+            hr{
+                color: $text--color--black;
+                border-bottom: $text--color--black solid 2px;
+                width: 70%;
+                margin: 10px auto;
+            }
+        }
+
+        .contactUs{
+            display: flex;
+            flex-direction: column;
+            &--title{
+                padding-bottom: 5px;
+                font-size: 1rem;
+                font-weight: 700;
+            }
+            
+            p{
+                font-weight: 500px;
+            }
+
+
+        }
+    }
+
+    .footer--copyright{
+        padding: 10px 0;
+        background-color: rgb(42, 42, 92);
+        color: $text--color--white;
+        font-size: .6rem;
+    }
+}
+
+@media screen and (min-width: 426px)
+{
+    footer{
+        .footer--copyright{
+            font-size: .8rem;
+        }
+    }
+}
+
+@media screen and (min-width: 769px)
+{
+    footer{
+        .footer--main{
+            flex-direction: row;
+            justify-content: space-between;
+            .quickLinks{
+                width: 80%;
+                padding-right: 10%;
+                border-right: 1px $text--color--black solid;
+                align-items: flex-start;
+
+                &--links{
+
+                    max-width: 300px;
+                    width: 100%;
+                    justify-content: space-between;
+                    &--left{
+                        margin-left: 0;
+                    }
+                }
+            }
+
+            .contactUs{
+                width: 50%;
+                padding-left: 20%;
+                border-left: 1px $text--color--black solid;
+                align-items: flex-end;
+            }
+        }
+
+        hr{
+            display: none;
+        }
+    }
+}
+
+@media screen and (min-width: 1025px)
+{
+    footer{
+        .footer--main{
+            padding: 20px 15%;
+        }
+        
+    }
+}

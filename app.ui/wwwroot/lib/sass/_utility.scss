@@ -7,6 +7,10 @@
     list-style: none;
     font-family: $font-stack;
 }
+
+html{
+    height: 100%;
+}
 a{
     text-decoration: none;
 }
@@ -20,8 +24,11 @@ body{
     background-color: var(--body--bg-color);
     color: var(--body--text-color);
     margin-top: 12vh;
+    display: flex;
+    flex-direction: column;
 }
 .container{
     overflow: auto;
     margin: 0 auto;
+    flex: 1 0 auto;
 }

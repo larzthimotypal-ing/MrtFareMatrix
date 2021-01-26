@@ -1,0 +1,146 @@
+﻿@model app.ui.Components.ObjectBinding.NavBarObject;
+
+<header class="wrapper">
+    <nav class="navbar">
+        <div class="left">
+            <div class="logo">
+                <a asp-controller="Home" asp-action="Login">
+                    MRT Fare Matrix
+                </a>
+            </div>
+        </div>
+        <div class="right">
+            <ul class="nav-items home--mob">
+                <li>
+                    <a href="#">
+                        <img class="nav-icon" src="~/img/icon/Home Icon-White.png" alt="Alternate Text" />
+                        <span>Home</span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="nav-items">
+                <li>
+                    <a href="#">
+                        <img class="nav-icon" src="~/img/icon/Fare Matrix Icon-White.png" alt="Alternate Text" />
+                        <span>Fare</span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="nav-items">
+                <li>
+                    <a href="#">
+                        <img class="nav-icon" src="~/img/icon/FAQ Icon-White.png" alt="Alternate Text" />
+                        <span>FAQs</span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="nav-items">
+                <li>
+                    <a href="#">
+                        <img class="nav-icon" src="~/img/icon/Reload Icon-White.png" alt="Alternate Text" />
+                        <span>Reload</span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="user-profile">
+                <li>
+                    @if (Model.IsAuthenticated)
+                    {
+
+                        <a href="#">
+                            <p class="user-profile--name">@Model.Name<br /><span class="user-profile--role">@Model.Role</span></p>
+                            <img src="~/img/icon/Profile Icon (Client)-White.png" alt="Profile_image" class="user-profile--pic">
+                            <i class="fas fa-angle-down"></i>
+                        </a>
+                        @if (!Model.IsAdmin)
+                        {
+                            <div class="dropdown">
+                                <ul>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fas fa-user"></i>
+                                            Profile
+                                        </a>
+                                    </li>
+                                    <li class="mob-nav--link">
+                                        <a href="#">
+                                            <i class="fas fa-sliders-h"></i>
+                                            Fare
+                                        </a>
+                                    </li>
+                                    <li class="mob-nav--link">
+                                        <a href="#">
+                                            <i class="fas fa-sliders-h"></i>
+                                            FAQs
+                                        </a>
+                                    </li>
+                                    <li class="mob-nav--link">
+                                        <a href="#">
+                                            <i class="fas fa-sliders-h"></i>
+                                            Reload
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="Identity" asp-controller="Authenticate" asp-action="SignOut">
+                                            <i class="fas fa-sign-out-alt"></i>
+                                            Signout
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        }
+                        else
+                        {
+                            <div class="dropdown">
+                                <ul>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fas fa-user"></i>
+                                            Profile
+                                        </a>
+                                    </li>
+                                    <li class="mob-nav--link">
+                                        <a href="#">
+                                            <i class="fas fa-sliders-h"></i>
+                                            Fare
+                                        </a>
+                                    </li>
+                                    <li class="mob-nav--link">
+                                        <a href="#">
+                                            <i class="fas fa-sliders-h"></i>
+                                            FAQs
+                                        </a>
+                                    </li>
+                                    <li class="mob-nav--link">
+                                        <a href="#">
+                                            <i class="fas fa-sliders-h"></i>
+                                            Reload
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="Identity" asp-controller="Authenticate" asp-action="SignOut">
+                                            <i class="fas fa-sign-out-alt"></i>
+                                            Signout
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        if (ViewContext.RouteData.Values["action"].ToString() == "LogIn")
+                        {
+                            <a asp-area="Identity" asp-controller="Authenticate" asp-action="Register">Register</a>
+                        }
+                        else
+                        {
+                            <a asp-area="Identity" asp-controller="Authenticate" asp-action="Login">Log-in</a>
+                        }
+                    }
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
