@@ -66,10 +66,12 @@ namespace app.ui.Areas.Identity
                     });
                 });
 
+                services.AddHttpContextAccessor();
 
                 services.AddScoped<IUserClaimsPrincipalFactory<AppUser>, MyUserClaimsPrincipalFactory>();
                 services.AddScoped<IIdentityService, IdentityService>();
                 services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+                
                 
             });
 

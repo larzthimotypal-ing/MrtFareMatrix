@@ -2,7 +2,36 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="wrapper--body">
+    <div class="section-hero">
+        <div class="section-hero--svg">
+            <img class="mobile--hidden svg--desktop" src="~/img/Landing Page.png" alt="Train Image" />
+            <img class="desktop--hidden svg--mobile" src="~/img/Fare Matrix Card-beep™.png" alt="Card Image" />
+        </div>
+        <div class="section-hero--cta">
+            <h3>beep&trade; card can make your journey much easier</h3>
+            <a class="btn-primary" asp-area="Identity" asp-controller="Authenticate" asp-action="Register">Sign-Up Now!</a>
+        </div>
+    </div>
+    <hr />
+    <div class="section-content">
+        <div class="section-content--left">
+            <p class="article--title">
+                Reload Beep Card Using GCash, Credit/Debit Card, Bank Transfer:
+            </p>
+            <p>Step 1: Visit Reload Page at the top, which is next to the fare page (<a href="#">go to reload page</a>).</p>
+            <p>Step 2: Key in your 16-digit card number found on the back of your Beep Card.</p>
+            <p>Step 3: Select a payment method of your preference.</p>
+            <p>Step 4: Key in the load amount, then tap "Pay Now".</p>
+            <p>Step 5: Visit a Beep e-load station and insert your card to complete the process.</p>
+        </div>
+        <div class="section-content--right">
+            <p class="article--title">
+                Automated Fare Collection System (AFCS)
+            </p>
+            <p>The contact-less stored value cards are interoperable across all beep&trade; fare collection terminals.This means that passengers will only need one card for all modes of transport that accept the beep&trade; card, be it Metro Manila's light rail system. We support multiple methods of fare collection from contact-less stored value card. The information of stored value card can be seen on this page(<a href="#">go to fare page.</a>).</p>
+
+        </div>
+    </div>
 </div>
+

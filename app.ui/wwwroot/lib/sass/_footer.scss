@@ -10,7 +10,7 @@ footer{
         padding: 20px 10%;
         display: flex;
         flex-direction: column;
-        background-color: rgb(247, 216, 82);
+        background-color: $footer-bg--color--top;
         
         .quickLinks{
             display: flex;
@@ -67,7 +67,7 @@ footer{
 
     .footer--copyright{
         padding: 10px 0;
-        background-color: rgb(42, 42, 92);
+        background-color: $footer-bg--color--bottom;
         color: $text--color--white;
         font-size: .6rem;
     }
@@ -87,12 +87,13 @@ footer{
     footer{
         .footer--main{
             flex-direction: row;
-            justify-content: space-between;
+            justify-content: center;
             .quickLinks{
-                width: 80%;
+                width: 50%;
                 padding-right: 10%;
                 border-right: 1px $text--color--black solid;
                 align-items: flex-start;
+                max-width: 600px;
 
                 &--links{
 
@@ -107,9 +108,10 @@ footer{
 
             .contactUs{
                 width: 50%;
-                padding-left: 20%;
+                padding-left: 10%;
                 border-left: 1px $text--color--black solid;
                 align-items: flex-end;
+                max-width: 600px;
             }
         }
 

@@ -30,20 +30,24 @@ namespace app.ui.Areas.Identity.CQRS
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IUrlHelper _urlHelper;
         private readonly IConfiguration _config;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public IdentityService(
             UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
             IUrlHelperFactory urlHelperFactory,
             IActionContextAccessor actionContextAccessor,
-            IConfiguration config
+            IConfiguration config,
+            IHttpContextAccessor httpContextAccessor
         )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _urlHelper = urlHelperFactory.GetUrlHelper(actionContextAccessor.ActionContext);
             _config = config;
-            
+            _httpContextAccessor = httpContextAccessor;
+
+
         }
 
         //Getting the value using key value pair in a section inside appsettings
@@ -64,8 +68,8 @@ namespace app.ui.Areas.Identity.CQRS
                 "VerifyEmail",      /*Action*/
                 "Authenticate",     /*Controller*/
                 new { userId = user.Id, code },     /*Object Value*/
-                "https",        /*Scheme*/
-                "localhost:44347"   /*Host*/
+                _httpContextAccessor.HttpContext.Request.Scheme,        /*Scheme*/
+                _httpContextAccessor.HttpContext.Request.Host.ToString()   /*Host*/
                 );
 
             return new CreateEmailVerificationTokenResult
@@ -172,6 +176,14 @@ namespace app.ui.Areas.Identity.CQRS
         {
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
+            {
+                return new VerifyEmailResult
+                {
+                    Succeeded = false
+                };
+            }
+
+            if (user.EmailConfirmed)
             {
                 return new VerifyEmailResult
                 {

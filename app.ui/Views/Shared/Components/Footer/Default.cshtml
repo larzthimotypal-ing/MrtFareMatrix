@@ -1,8 +1,10 @@
-﻿<footer>
+﻿@model app.ui.Components.ObjectBinding.FooterObject
+
+<footer>
     <div class="footer--main">
         <div class="quickLinks">
             <div class="quickLinks--title">
-                <p>Quick Links<p>
+                <p>QUICK LINKS<p>
             </div>
             <div class="quickLinks--links">
                 <div class="quickLinks--links--left">
@@ -20,8 +22,8 @@
         </div>
         <div class="contactUs">
             <p class="contactUs--title">CONTACT US</p>
-            <p>customer.info@gmail.com</p>
-            <p>+1 800 603 5012</p>
+            <p>@Model.Email</p>
+            <p>@Model.ContactNumber</p>
         </div>
     </div>
     <div class="footer--copyright">

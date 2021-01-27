@@ -23,12 +23,48 @@ body{
     // @include set-bg-color(--body--bg-color,$text-color--light,$text-color--night);
     background-color: var(--body--bg-color);
     color: var(--body--text-color);
-    margin-top: 12vh;
     display: flex;
     flex-direction: column;
+    
 }
 .container{
     overflow: auto;
     margin: 0 auto;
     flex: 1 0 auto;
+    margin: 50px 0;
+    align-self: center;
+    width: 80%;
+}
+
+
+@media screen and (max-width: 425px)
+{
+    .container{
+        width: 90%;
+    }
+}
+
+@media screen and (min-width: 993px)
+{
+    .mobile--hidden{
+        display: block;
+        margin: 0;
+    }
+
+    .desktop--hidden{
+        display: none;
+        margin: 0;
+    }
+}
+
+@media screen and (max-width: 992px)
+{
+    .mobile--hidden{
+        display: none;
+        margin: 0;
+    }
+    .desktop--hidden{
+        display: block;
+        margin: 0;
+    }
 }
