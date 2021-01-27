@@ -31,7 +31,6 @@ namespace app.ui.Areas.Identity.Controllers
             if (ModelState.IsValid)
             {
                 account.Role = "Client";
-
                 var result = _identityService.CreateAccount(account).Result.Status;
 
                 if (result == "Success")

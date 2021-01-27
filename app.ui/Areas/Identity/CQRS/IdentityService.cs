@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
@@ -12,6 +13,7 @@ using app.ui.Areas.Identity.CQRS.Command.SendPasswordResetEmail;
 using app.ui.Areas.Identity.CQRS.Command.VerifyEmail;
 using app.ui.Areas.Identity.CQRS.Queries.UserExists;
 using app.ui.Areas.Identity.Models;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -19,6 +21,7 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
+using MimeKit;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
@@ -31,6 +34,7 @@ namespace app.ui.Areas.Identity.CQRS
         private readonly IUrlHelper _urlHelper;
         private readonly IConfiguration _config;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IWebHostEnvironment _env;
 
         public IdentityService(
             UserManager<AppUser> userManager,
@@ -38,7 +42,8 @@ namespace app.ui.Areas.Identity.CQRS
             IUrlHelperFactory urlHelperFactory,
             IActionContextAccessor actionContextAccessor,
             IConfiguration config,
-            IHttpContextAccessor httpContextAccessor
+            IHttpContextAccessor httpContextAccessor,
+            IWebHostEnvironment env
         )
         {
             _userManager = userManager;
@@ -46,6 +51,7 @@ namespace app.ui.Areas.Identity.CQRS
             _urlHelper = urlHelperFactory.GetUrlHelper(actionContextAccessor.ActionContext);
             _config = config;
             _httpContextAccessor = httpContextAccessor;
+            _env = env;
 
 
         }
@@ -202,10 +208,14 @@ namespace app.ui.Areas.Identity.CQRS
 
         public async Task<SendEmailVerificationResult> SendEmailVerification(SendEmailVerificationCommand config)
         {
+            //dito mo na lagay yung webroot,pathtofile,builder pati streamreader
+
             var client = new SendGridClient(config.ApiKey);
             var from = new EmailAddress(config.SenderEmail, config.SenderName);
             var to = new EmailAddress(config.ReceiverEmail, config.ReceiverName);
             config.HtmlContent = "<a href =" + config.Link + "> Click this to verify account</a>";
+
+            //wag mo na gawin yung messageBody
 
             var msg = MailHelper.CreateSingleEmail(
                 from,
