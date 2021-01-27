@@ -7,7 +7,7 @@
     margin-top: 50px;
 }
 
-.container--emailCon{
+.container--card{
     width: 90%;
     min-height: 300px;
     height: 60%;
@@ -23,6 +23,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     max-width: 700px;
 
     h3{
@@ -30,36 +31,15 @@
     }
     
     .confetti{
-        width: 350px;
+        width: 50%;
         position: absolute;
-        top: -30px;
-        left: 100px;
+        top: 0;
+        left: calc((width/4));
         pointer-events: none;
     }
-
 
 }
 
 
-// @media screen and (max-width: 992px){
-//     .container--emailCon{
-//         margin-top: 40px;
-//         max-width: 500px;
-//         width: 80%;
-//         padding: 100px 40px;
-//         .confetti{
-//             width: 300px;
-//             left: 80px;
-//         }
-//     }
-// }
-
-// @media screen and (max-width: 425px){
-
-//     .container--emailCon .confetti{
-//         width: 220px;
-//         left: 40px;
-//     }
-// }
 
     

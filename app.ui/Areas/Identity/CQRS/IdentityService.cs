@@ -25,6 +25,8 @@ using MimeKit;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
+
+
 namespace app.ui.Areas.Identity.CQRS
 {
     public class IdentityService : IIdentityService
@@ -34,7 +36,8 @@ namespace app.ui.Areas.Identity.CQRS
         private readonly IUrlHelper _urlHelper;
         private readonly IConfiguration _config;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly IWebHostEnvironment _env;
+        
+        private IWebHostEnvironment _env;
 
         public IdentityService(
             UserManager<AppUser> userManager,
@@ -43,19 +46,19 @@ namespace app.ui.Areas.Identity.CQRS
             IActionContextAccessor actionContextAccessor,
             IConfiguration config,
             IHttpContextAccessor httpContextAccessor,
-            IWebHostEnvironment env
-        )
+            IWebHostEnvironment env)
         {
+            
             _userManager = userManager;
             _signInManager = signInManager;
             _urlHelper = urlHelperFactory.GetUrlHelper(actionContextAccessor.ActionContext);
             _config = config;
             _httpContextAccessor = httpContextAccessor;
+
             _env = env;
-
-
+            
+           
         }
-
         //Getting the value using key value pair in a section inside appsettings
         public string GetValueInSection(string section, string key)
         {
@@ -63,7 +66,7 @@ namespace app.ui.Areas.Identity.CQRS
         }
 
         public CreateEmailVerificationTokenResult CreateEmailVerificationToken(AppUser user)
-        {   
+        {
             //Generate Token
             var token = _userManager.GenerateEmailConfirmationTokenAsync(user).Result;
             //Encode token
@@ -116,7 +119,7 @@ namespace app.ui.Areas.Identity.CQRS
                 Email = creds.Email,
                 Role = creds.Role
             };
-            
+
             var result = await _userManager.CreateAsync(newUser, creds.Password);
 
             if (result.Succeeded)
@@ -124,17 +127,18 @@ namespace app.ui.Areas.Identity.CQRS
                 var emailConfig = new SendEmailVerificationCommand
                 {
                     Link = CreateEmailVerificationToken(newUser).Link,
-                    ApiKey = GetValueInSection("EmailConfig","SendGridApiKey"),
+                    ApiKey = GetValueInSection("EmailConfig", "SendGridApiKey"),
                     SenderEmail = GetValueInSection("EmailConfig", "SenderEmail"),
                     SenderName = GetValueInSection("EmailConfig", "SenderName"),
                     ReceiverEmail = newUser.Email,
                     ReceiverName = newUser.FirstName,
-                    Subject = GetValueInSection("EmailVerification","Subject"),
-                    TextContent = GetValueInSection("EmailVerification","TextContent")
+                    Subject = GetValueInSection("EmailVerification", "Subject"),
+                    TextContent = GetValueInSection("EmailVerification", "TextContent")
                 };
 
                 var response = SendEmailVerification(emailConfig).Result.Response;
                 status = "Success";
+
                 return new CreateAccountResult
                 {
                     Status = status
@@ -153,24 +157,24 @@ namespace app.ui.Areas.Identity.CQRS
         {
             if (creds.Username == null || creds.Password == null)
             {
-                return new LogInResult {Status = "Empty"};
+                return new LogInResult { Status = "Empty" };
             }
             var user = await _userManager.FindByNameAsync(creds.Username);
 
             if (user == null)
-            {    
+            {
                 return new LogInResult { Status = "NotFound" };
             }
 
             var persistence = false;
             var result = await _signInManager.PasswordSignInAsync(creds.Username, creds.Password, persistence, false);
-            
+
             if (result.Succeeded)
             {
-                return new LogInResult { Status = "Success"};
+                return new LogInResult { Status = "Success" };
             }
 
-            return new LogInResult { Status = "Failed"};
+            return new LogInResult { Status = "Failed" };
         }
 
         public async void SignOut()
@@ -199,7 +203,7 @@ namespace app.ui.Areas.Identity.CQRS
 
             code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
             var response = await _userManager.ConfirmEmailAsync(user, code);
-            
+
             return new VerifyEmailResult
             {
                 Succeeded = response.Succeeded
@@ -208,28 +212,37 @@ namespace app.ui.Areas.Identity.CQRS
 
         public async Task<SendEmailVerificationResult> SendEmailVerification(SendEmailVerificationCommand config)
         {
-            //dito mo na lagay yung webroot,pathtofile,builder pati streamreader
+
+            var webRoot = _env.WebRootPath;
+            var pathToFile = webRoot + "\\Template\\try.html";
+
+            var builder = new BodyBuilder();
+
+            using (StreamReader SourceReader = System.IO.File.OpenText(pathToFile))
+            {
+                builder.HtmlBody = SourceReader.ReadToEnd();
+            }
 
             var client = new SendGridClient(config.ApiKey);
             var from = new EmailAddress(config.SenderEmail, config.SenderName);
             var to = new EmailAddress(config.ReceiverEmail, config.ReceiverName);
-            config.HtmlContent = "<a href =" + config.Link + "> Click this to verify account</a>";
-
-            //wag mo na gawin yung messageBody
+            var htmlContent = string.Format(builder.HtmlBody, config.Link);
 
             var msg = MailHelper.CreateSingleEmail(
                 from,
                 to,
                 config.Subject,
                 config.TextContent,
-                config.HtmlContent);
+                htmlContent);
+
             msg.SetClickTracking(false, false);
             var response = await client.SendEmailAsync(msg);
-            
+
             return new SendEmailVerificationResult
             {
                 Response = response
             };
+
         }
 
         public async Task<UserExistsResult> UserExists(string userName)
@@ -253,10 +266,15 @@ namespace app.ui.Areas.Identity.CQRS
             };
         }
 
+        public Task<SendPasswordResetEmailResult> SendPasswordResetEmail(SendPasswordResetEmailCommand command, object config)
+        {
+
+
+            throw new NotImplementedException();
+        }
+
         public Task<SendPasswordResetEmailResult> SendPasswordResetEmail(SendPasswordResetEmailCommand command)
         {
-            // Crete Action Link 
-
             throw new NotImplementedException();
         }
     }
