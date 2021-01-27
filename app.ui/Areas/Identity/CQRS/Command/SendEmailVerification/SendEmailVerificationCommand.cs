@@ -17,5 +17,6 @@ namespace app.ui.Areas.Identity.CQRS.Command.SendEmailVerification
         public string Subject { get; set; }
         public string TextContent { get; set; }
         public string HtmlContent { get; set; }
+
     }
 }
