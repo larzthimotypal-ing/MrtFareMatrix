@@ -14,7 +14,11 @@
                  else if (Model.ErrorMessage == "PasswordNotMatch")
                  {
                     <p>Your Password and Confirm Password Did Not Match</p>
-                 }
+                }
+                else if (Model.ErrorMessage == "Taken")
+                {
+                    <p>Username Already Taken. Please Choose Another One</p>
+                }
             </div>
          }
 

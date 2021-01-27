@@ -20,6 +20,10 @@ namespace app.ui.Controllers
 
         public IActionResult Index()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("RoleReroute", "Authenticate", new { area = "Identity" });
+            }
             return View();
         }
 
@@ -29,6 +33,11 @@ namespace app.ui.Controllers
         }
 
         public IActionResult Error404()
+        {
+            return View();
+        }
+
+        public IActionResult FAQs()
         {
             return View();
         }

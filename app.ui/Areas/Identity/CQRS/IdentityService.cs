@@ -214,7 +214,7 @@ namespace app.ui.Areas.Identity.CQRS
         {
 
             var webRoot = _env.WebRootPath;
-            var pathToFile = webRoot + "\\Template\\try.html";
+            var pathToFile = webRoot + "\\Template\\AccountConfirmation.html";
 
             var builder = new BodyBuilder();
 
