@@ -4,7 +4,7 @@
     <nav class="navbar">
         <div class="left">
             <div class="logo">
-                <a asp-controller="Home" asp-action="Login">
+                <a asp-area="" asp-controller="Home" asp-action="Index">
                     MRT Fare Matrix
                 </a>
             </div>
@@ -12,7 +12,7 @@
         <div class="right">
             <ul class="nav-items home--mob">
                 <li>
-                    <a href="#">
+                    <a asp-area="" asp-controller="Home" asp-action="Index">
                         <img class="nav-icon" src="~/img/icon/Home Icon-White.png" alt="Alternate Text" />
                         <span>Home</span>
                     </a>
@@ -20,7 +20,7 @@
             </ul>
             <ul class="nav-items">
                 <li>
-                    <a href="#">
+                    <a asp-area="" asp-controller="Home" asp-action="Fare">
                         <img class="nav-icon" src="~/img/icon/Fare Matrix Icon-White.png" alt="Alternate Text" />
                         <span>Fare</span>
                     </a>

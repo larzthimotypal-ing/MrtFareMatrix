@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 
-namespace app.ui.Areas.Identity.CQRS.Command.SendEmailVerification
+namespace app.ui.Areas.Identity.Service.Command.SendEmailVerification
 {
     public class SendEmailVerificationCommand
     {

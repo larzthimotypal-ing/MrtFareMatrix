@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using app.ui.Areas.Identity.CQRS.Command.CreateAccount;
-using app.ui.Areas.Identity.CQRS.Command.LogIn;
-using app.ui.Areas.Identity.CQRS.Command.VerifyEmail;
+using app.ui.Areas.Identity.Service.Command.CreateAccount;
+using app.ui.Areas.Identity.Service.Command.LogIn;
+using app.ui.Areas.Identity.Service.Command.VerifyEmail;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

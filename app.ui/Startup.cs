@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,42 +32,7 @@ namespace app.ui
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddDbContext<AppDbContext>(options =>
-            //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-            //services.AddIdentity<AppUser, IdentityRole>(config =>
-            //{
-            //    //configuring password
-            //    config.Password.RequiredLength = 6;
-            //    config.Password.RequireDigit = false;
-            //    config.Password.RequireNonAlphanumeric = false;
-            //    config.Password.RequireUppercase = false;
-            //    config.SignIn.RequireConfirmedEmail = true;
-            //})
-            //    .AddEntityFrameworkStores<AppDbContext>()
-            //    .AddDefaultTokenProviders()
-            //    .AddClaimsPrincipalFactory<MyUserClaimsPrincipalFactory>();
-
-            //services.ConfigureApplicationCookie(config =>
-            //{
-            //    config.Cookie.Name = "Identity.Cookie";
-            //    config.LoginPath = "/Authenticate/Login";
-            //});
-
-            //services.AddAuthorization(config =>
-            //{
-            //    config.AddPolicy("Claim.AdminAccess", policyBuilder =>
-            //    {
-            //        policyBuilder.RequireClaim("MRT.AccessLevel", "Admin");
-            //    });
-            //});
-
-            //services.AddScoped(typeof(IIdentityRepository<>), typeof(GenericIdentityRepository<>));
-            //services.AddTransient<IIdentityService, IdentityService>();
-            //services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
-
-            //services.AddScoped<IUserClaimsPrincipalFactory<AppUser>, MyUserClaimsPrincipalFactory>();
-
+            
             services.AddControllersWithViews();
         }
 
@@ -78,10 +45,20 @@ namespace app.ui
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Home/Error404");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.Use(async (context, next) =>
+            {
+                await next();
+                var response = context.Response.StatusCode;
+                if (context.Response.StatusCode == 404)
+                {
+                    context.Request.Path = "/Home/Error404";
+                    await next();
+                }
+            });
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -91,7 +68,7 @@ namespace app.ui
 
             app.UseAuthorization();
 
-            app.UseStatusCodePagesWithRedirects("~/Home/Error404");
+            //app.UseStatusCodePagesWithRedirects("~/Home/Error404");
 
             app.UseEndpoints(endpoints =>
             {

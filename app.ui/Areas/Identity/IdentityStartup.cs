@@ -4,7 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using app.repository;
-using app.ui.Areas.Identity.CQRS;
+using app.ui.Areas.Identity.Service;
 using app.ui.Areas.Identity.Data;
 using app.ui.Areas.Identity.Models;
 using Microsoft.AspNetCore.Authorization;

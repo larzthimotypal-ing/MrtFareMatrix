@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace app.ui.Areas.Identity.CQRS.Command.LogIn
+namespace app.ui.Areas.Identity.Service.Command.LogIn
 {
     public class LogInCommand
     {

@@ -177,7 +177,8 @@
         display: block;
         width: 100%;
         text-align: center;      
-        
+        font-weight: 600;
+        font-size: 1rem;
         h1{
             margin-bottom: 30px;
         }
@@ -213,7 +214,6 @@
 }
 
 @media screen and (max-width: 425px){
-
     .wrapper .navbar{
         min-height: 8vh;
         .right .nav-items{

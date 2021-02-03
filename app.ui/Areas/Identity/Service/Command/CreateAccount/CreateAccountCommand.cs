@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace app.ui.Areas.Identity.CQRS.Command.CreateAccount
+namespace app.ui.Areas.Identity.Service.Command.CreateAccount
 {
     public class CreateAccountCommand
     {

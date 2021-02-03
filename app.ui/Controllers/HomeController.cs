@@ -37,7 +37,17 @@ namespace app.ui.Controllers
             return View();
         }
 
+        public IActionResult Error401()
+        {
+            return View();
+        }
+
         public IActionResult FAQs()
+        {
+            return View();
+        }
+
+        public IActionResult Fare()
         {
             return View();
         }

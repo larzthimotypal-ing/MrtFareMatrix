@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using app.ui.Areas.Identity.CQRS.Command.CreateAccount;
-using app.ui.Areas.Identity.CQRS.Command.CreateEmailVerificationToken;
-using app.ui.Areas.Identity.CQRS.Command.LogIn;
-using app.ui.Areas.Identity.CQRS.Command.SendEmailVerification;
-using app.ui.Areas.Identity.CQRS.Command.SendPasswordResetEmail;
-using app.ui.Areas.Identity.CQRS.Command.VerifyEmail;
-using app.ui.Areas.Identity.CQRS.Queries.UserExists;
+using app.ui.Areas.Identity.Service.Command.CreateAccount;
+using app.ui.Areas.Identity.Service.Command.CreateEmailVerificationToken;
+using app.ui.Areas.Identity.Service.Command.LogIn;
+using app.ui.Areas.Identity.Service.Command.SendEmailVerification;
+using app.ui.Areas.Identity.Service.Command.SendPasswordResetEmail;
+using app.ui.Areas.Identity.Service.Command.VerifyEmail;
+using app.ui.Areas.Identity.Service.Queries.UserExists;
 using app.ui.Areas.Identity.Models;
 
 namespace app.ui.Areas.Identity

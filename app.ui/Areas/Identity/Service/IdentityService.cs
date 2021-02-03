@@ -5,13 +5,13 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using app.ui.Areas.Identity.CQRS.Command.CreateAccount;
-using app.ui.Areas.Identity.CQRS.Command.CreateEmailVerificationToken;
-using app.ui.Areas.Identity.CQRS.Command.LogIn;
-using app.ui.Areas.Identity.CQRS.Command.SendEmailVerification;
-using app.ui.Areas.Identity.CQRS.Command.SendPasswordResetEmail;
-using app.ui.Areas.Identity.CQRS.Command.VerifyEmail;
-using app.ui.Areas.Identity.CQRS.Queries.UserExists;
+using app.ui.Areas.Identity.Service.Command.CreateAccount;
+using app.ui.Areas.Identity.Service.Command.CreateEmailVerificationToken;
+using app.ui.Areas.Identity.Service.Command.LogIn;
+using app.ui.Areas.Identity.Service.Command.SendEmailVerification;
+using app.ui.Areas.Identity.Service.Command.SendPasswordResetEmail;
+using app.ui.Areas.Identity.Service.Command.VerifyEmail;
+using app.ui.Areas.Identity.Service.Queries.UserExists;
 using app.ui.Areas.Identity.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -27,7 +27,7 @@ using SendGrid.Helpers.Mail;
 
 
 
-namespace app.ui.Areas.Identity.CQRS
+namespace app.ui.Areas.Identity.Service
 {
     public class IdentityService : IIdentityService
     {
@@ -37,7 +37,7 @@ namespace app.ui.Areas.Identity.CQRS
         private readonly IConfiguration _config;
         private readonly IHttpContextAccessor _httpContextAccessor;
         
-        private IWebHostEnvironment _env;
+        private readonly IWebHostEnvironment _env;
 
         public IdentityService(
             UserManager<AppUser> userManager,
@@ -214,7 +214,7 @@ namespace app.ui.Areas.Identity.CQRS
         {
 
             var webRoot = _env.WebRootPath;
-            var pathToFile = webRoot + "\\Template\\AccountConfirmation.html";
+            var pathToFile = webRoot + "\\Template\\try.html";
 
             var builder = new BodyBuilder();
 
