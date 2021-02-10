@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace app.ui.Areas.Identity.Service.Command.CreatePasswordResetEmailToken
 {
-    public class CreatePasswordResetEmailToken
+    public class CreatePasswordResetEmailTokenResult
     {
         public string Link { get; set; }
     }

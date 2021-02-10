@@ -7,10 +7,12 @@ using System.Text;
 using System.Threading.Tasks;
 using app.ui.Areas.Identity.Service.Command.CreateAccount;
 using app.ui.Areas.Identity.Service.Command.CreateEmailVerificationToken;
+using app.ui.Areas.Identity.Service.Command.CreatePasswordResetEmailToken;
 using app.ui.Areas.Identity.Service.Command.LogIn;
 using app.ui.Areas.Identity.Service.Command.SendEmailVerification;
 using app.ui.Areas.Identity.Service.Command.SendPasswordResetEmail;
 using app.ui.Areas.Identity.Service.Command.VerifyEmail;
+using app.ui.Areas.Identity.Service.Command.VerifyResetPassword;
 using app.ui.Areas.Identity.Service.Queries.UserExists;
 using app.ui.Areas.Identity.Models;
 using Microsoft.AspNetCore.Hosting;
@@ -24,8 +26,8 @@ using Microsoft.Extensions.Configuration;
 using MimeKit;
 using SendGrid;
 using SendGrid.Helpers.Mail;
-
-
+using System.Text.Encodings.Web;
+using app.ui.Areas.Identity.Service.Command.PasswordReset;
 
 namespace app.ui.Areas.Identity.Service
 {
@@ -36,8 +38,9 @@ namespace app.ui.Areas.Identity.Service
         private readonly IUrlHelper _urlHelper;
         private readonly IConfiguration _config;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        
+
         private readonly IWebHostEnvironment _env;
+        
 
         public IdentityService(
             UserManager<AppUser> userManager,
@@ -48,7 +51,7 @@ namespace app.ui.Areas.Identity.Service
             IHttpContextAccessor httpContextAccessor,
             IWebHostEnvironment env)
         {
-            
+
             _userManager = userManager;
             _signInManager = signInManager;
             _urlHelper = urlHelperFactory.GetUrlHelper(actionContextAccessor.ActionContext);
@@ -56,8 +59,8 @@ namespace app.ui.Areas.Identity.Service
             _httpContextAccessor = httpContextAccessor;
 
             _env = env;
-            
-           
+
+
         }
         //Getting the value using key value pair in a section inside appsettings
         public string GetValueInSection(string section, string key)
@@ -85,6 +88,26 @@ namespace app.ui.Areas.Identity.Service
             {
                 Link = link
             };
+        }
+
+        public async Task<CreatePasswordResetEmailTokenResult> CreatePasswordResetEmailToken(AppUser user)
+
+        {
+            var passwordToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+            passwordToken = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(passwordToken));
+            var passwordresetlink = UrlHelperExtensions.Action(
+                 _urlHelper,
+                "VerifyResetPassword",
+                "Authenticate",
+                new { userId = user.Id, passwordToken },
+                _httpContextAccessor.HttpContext.Request.Scheme,
+                _httpContextAccessor.HttpContext.Request.Host.ToString()
+                );
+            return new CreatePasswordResetEmailTokenResult
+            {
+                Link = passwordresetlink
+            };
+
         }
 
         public async Task<CreateAccountResult> CreateAccount(CreateAccountCommand creds)
@@ -132,8 +155,8 @@ namespace app.ui.Areas.Identity.Service
                     SenderName = GetValueInSection("EmailConfig", "SenderName"),
                     ReceiverEmail = newUser.Email,
                     ReceiverName = newUser.FirstName,
-                    Subject = GetValueInSection("EmailVerification", "Subject"),
-                    TextContent = GetValueInSection("EmailVerification", "TextContent")
+                    Subject = GetValueInSection("EmailVerification", "Subject")
+                   
                 };
 
                 var response = SendEmailVerification(emailConfig).Result.Response;
@@ -182,7 +205,7 @@ namespace app.ui.Areas.Identity.Service
             await _signInManager.SignOutAsync();
         }
 
-        public async Task<VerifyEmailResult> VerifyEmail(string userId, string code)
+        public async Task<VerifyEmailResult> VerifyResetPassword(string userId, string code)
         {
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
@@ -266,16 +289,107 @@ namespace app.ui.Areas.Identity.Service
             };
         }
 
-        public Task<SendPasswordResetEmailResult> SendPasswordResetEmail(SendPasswordResetEmailCommand command, object config)
+        public async Task<SendPasswordResetEmailResult> SendPasswordResetEmail(SendPasswordResetEmailCommand config, AppUser user)
         {
+            var link = UrlHelperExtensions.Action(
+                _urlHelper,         /*Url Helper*/
+                "PasswordResetConfirmation",      /*Action*/
+                "Authenticate",     /*Controller*/
+                new { userId = user.Id },     /*Object Value*/
+                _httpContextAccessor.HttpContext.Request.Scheme,        /*Scheme*/
+                _httpContextAccessor.HttpContext.Request.Host.ToString()   /*Host*/
+                );
+            var builder = new BodyBuilder();
+            var client = new SendGridClient(config.ApiKey);
+            var from = new EmailAddress(config.SenderEmail, config.SenderName);
+            var to = new EmailAddress(config.ReceiverEmail, config.ReceiverName);
+            var htmlContent = $"<a href='{HtmlEncoder.Default.Encode(link)}'>Test.</a>";
+            
+            var msg = MailHelper.CreateSingleEmail(
+                from,
+                to,
+                config.Subject,
+                config.TextContent,
+                htmlContent);
 
+            msg.SetClickTracking(false, false);
+            var response = await client.SendEmailAsync(msg);
 
-            throw new NotImplementedException();
+            return new SendPasswordResetEmailResult
+            {
+                Response = response
+            };
+
         }
 
-        public Task<SendPasswordResetEmailResult> SendPasswordResetEmail(SendPasswordResetEmailCommand command)
+        public async Task<PasswordResetResult> PasswordReset(PasswordResetCommand config)
         {
-            throw new NotImplementedException();
+            var user = await _userManager.FindByEmailAsync(config.Email);
+            var emailConfig = new SendPasswordResetEmailCommand
+            {
+
+                ApiKey = GetValueInSection("EmailConfig", "SendGridApiKey"),
+                SenderEmail = GetValueInSection("EmailConfig", "SenderEmail"),
+                SenderName = GetValueInSection("EmailConfig", "SenderName"),
+                ReceiverEmail = user.Email,
+                ReceiverName = user.FirstName,
+                Subject = GetValueInSection("PasswordReset", "Subject")
+               
+            };
+
+            var result = SendPasswordResetEmail(emailConfig, user);
+            return new PasswordResetResult { };
         }
+
+
+
+
+
+        /*  public CreatePasswordResetEmailTokenResult CreatePasswordResetEmailToken(string email)
+          {
+              throw new NotImplementedException();
+          }
+
+          public async Task<VerifyResetPasswordResult> VerifyResetPassword(string userId, string code)
+          {
+              var user = await _userManager.FindByIdAsync(userId);
+              if (user == null)
+              {
+                  return new VerifyResetPasswordResult
+                  {
+                      Succeeded = false
+                  };
+              }
+
+              if (user.EmailConfirmed)
+              {
+                  return new VerifyResetPasswordResult
+                  {
+                      Succeeded = false
+                  };
+              }
+              return new VerifyResetPasswordResult { };
+          }
+
+          Task<CreatePasswordResetEmailTokenResult> IIdentityService.CreatePasswordResetEmailToken(string email)
+          {
+              throw new NotImplementedException();
+          }
+
+          public Task<SendPasswordResetEmail> SendPasswordResetEmail(SendPasswordResetEmailCommand command)
+          {
+              throw new NotImplementedException();
+          }
+
+          public object SendPasswordResetEmail(string userId)
+          {
+              throw new NotImplementedException();
+          }
+         */
     }
 }
+
+
+
+
+ 
