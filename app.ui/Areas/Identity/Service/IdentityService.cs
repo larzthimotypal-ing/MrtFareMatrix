@@ -94,6 +94,7 @@ namespace app.ui.Areas.Identity.Service
 
         {
             var passwordToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+            
             passwordToken = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(passwordToken));
             var passwordresetlink = UrlHelperExtensions.Action(
                  _urlHelper,
@@ -103,6 +104,7 @@ namespace app.ui.Areas.Identity.Service
                 _httpContextAccessor.HttpContext.Request.Scheme,
                 _httpContextAccessor.HttpContext.Request.Host.ToString()
                 );
+
             return new CreatePasswordResetEmailTokenResult
             {
                 Link = passwordresetlink

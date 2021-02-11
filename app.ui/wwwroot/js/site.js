@@ -37,13 +37,13 @@ faqTitleList.forEach( dropdown => {
 
 
 //Email Verification
-// const confettiContainer = document.getElementById('confetti');
-// const animItem = bodymovin.loadAnimation(
-//     {
-//         wrapper: confettiContainer,
-//         animType: 'svg',
-//         loop: false,
-//         autoplay: true,
-//         path: 'https://assets6.lottiefiles.com/packages/lf20_u4yrau.json'
-//     });
+const confettiContainer = document.getElementById('confetti');
+const animItem = bodymovin.loadAnimation(
+    {
+        wrapper: confettiContainer,
+        animType: 'svg',
+        loop: false,
+        autoplay: true,
+        path: 'https://assets6.lottiefiles.com/packages/lf20_u4yrau.json'
+    });
 

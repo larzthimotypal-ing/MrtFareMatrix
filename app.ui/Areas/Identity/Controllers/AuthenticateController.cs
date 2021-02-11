@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using app.service;
 using app.ui.Areas.Identity.Service.Command.CreateAccount;
 using app.ui.Areas.Identity.Service.Command.LogIn;
 using app.ui.Areas.Identity.Service.Command.PasswordReset;
@@ -18,10 +19,12 @@ namespace app.ui.Areas.Identity.Controllers
     public class AuthenticateController : Controller
     {
         private readonly IIdentityService _identityService;
+        private readonly IAccountService _accountService;
 
-        public AuthenticateController(IIdentityService identityService)
+        public AuthenticateController(IIdentityService identityService, IAccountService accountService)
         {
             _identityService = identityService;
+            _accountService = accountService;
         }
         public IActionResult Register()
         {
@@ -38,6 +41,14 @@ namespace app.ui.Areas.Identity.Controllers
 
                 if (result == "Success")
                 {
+                    var newAccount = new app.service.Accounts.Commands.CreateAccount.CreateAccountCommand
+                    {
+                        FirstName = account.FirstName,
+                        LastName = account.LastName,
+                        EmailAddress = account.Email
+                    };
+
+                    _accountService.CreateAccount(newAccount);
                     return RedirectToAction("EmailConfirmation");
                 }
                 else
@@ -106,7 +117,7 @@ namespace app.ui.Areas.Identity.Controllers
         public IActionResult PasswordResetConfirmation(string userId)
         {
             var command = new PasswordResetConfirmationCommand {
-                userId = userId
+                UserId = userId
             };
 
             return View(command);
@@ -117,12 +128,13 @@ namespace app.ui.Areas.Identity.Controllers
         {
             var command = new PasswordResetConfirmationCommand
             {
-                userId = userId,
+                UserId = userId,
                 NewPassword = newPassword,
                 ConfirmPassword = confirmPassword
             };
 
-          
+            
+
             return View();
         }
 

@@ -11,7 +11,7 @@ namespace app.ui.Components
     [ViewComponent(Name = "Footer")]
     public class FooterViewComponent : ViewComponent
     {
-        private IConfiguration _config;
+        private readonly IConfiguration _config;
 
         public FooterViewComponent(IConfiguration config)
         {

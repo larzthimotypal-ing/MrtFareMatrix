@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using app.repository;
+using app.service;
+using app.service.Accounts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,7 +34,8 @@ namespace app.ui
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+            services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
+            services.AddTransient<IAccountService, AccountService>();
             services.AddControllersWithViews();
         }
 

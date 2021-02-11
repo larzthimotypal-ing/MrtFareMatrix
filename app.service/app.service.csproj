@@ -14,4 +14,8 @@
     <ProjectReference Include="..\app.repository\app.repository.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Accounts\Query\" />
+  </ItemGroup>
+
 </Project>

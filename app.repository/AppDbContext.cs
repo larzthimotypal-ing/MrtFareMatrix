@@ -14,12 +14,11 @@ namespace app.repository
         {
             
         }
-
-        //public DbSet<Accounts> Accounts { get; set; }
+        public DbSet<Accounts> Accounts { get; set; }
         //public DbSet<Admin> Admin { get; set; }
         //public DbSet<Cards> Cards { get; set; }
         //public DbSet<Destination> Destination { get; set; }
         //public DbSet<Issue> Issue { get; set; }
-        
+
     }
 }
