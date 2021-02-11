@@ -12,6 +12,7 @@ using app.ui.Areas.Identity.Service.Queries.UserExists;
 using app.ui.Areas.Identity.Models;
 using app.ui.Areas.Identity.Service.Command.CreatePasswordResetEmailToken;
 using app.ui.Areas.Identity.Service.Command.PasswordReset;
+using app.ui.Areas.Identity.Service.Command.PasswordResetConfirmation;
 
 namespace app.ui.Areas.Identity
 {
@@ -26,6 +27,7 @@ namespace app.ui.Areas.Identity
         Task<UserExistsResult> UserExists(string userName);
         Task<SendPasswordResetEmailResult> SendPasswordResetEmail(SendPasswordResetEmailCommand config, AppUser user);
         Task<PasswordResetResult> PasswordReset(PasswordResetCommand config);
+        Task<PasswordResetConfirmationCommand> PasswordResetConfirmation(PasswordResetConfirmationCommand command);
         
         
     }

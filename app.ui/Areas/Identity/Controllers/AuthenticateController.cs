@@ -97,7 +97,7 @@ namespace app.ui.Areas.Identity.Controllers
         [HttpPost]
         public async Task<IActionResult> PasswordReset(string email)
         {
-            var command = new PasswordResetCommand { Email = email};
+            var command = new PasswordResetCommand { Email = email };
             var result = await _identityService.PasswordReset(command);
 
             return RedirectToRoute(new { area = "Identity", controller = "Authenticate", action = "PasswordResetSent" });
@@ -113,8 +113,9 @@ namespace app.ui.Areas.Identity.Controllers
         }
 
         [HttpPost]
-        public IActionResult PasswordResetConfirmation(string userId, string newPassword, string confirmPassword)
-        {
+        public async Task <IActionResult> PasswordResetConfirmation(string userId, string newPassword, string confirmPassword)
+        {   
+           
             var command = new PasswordResetConfirmationCommand
             {
                 userId = userId,
@@ -122,14 +123,31 @@ namespace app.ui.Areas.Identity.Controllers
                 ConfirmPassword = confirmPassword
             };
 
-          
-            return View();
+            if (newPassword != null)
+            {
+                if (newPassword != confirmPassword)
+                {
+                    return View(command);
+                }
+
+                var result = await _identityService.PasswordResetConfirmation(command);
+                return RedirectToRoute(new { area = "Identity", controller = "Authenticate", action = "SuccessfulPasswordReset" });
+
+            }
+            return View(command);
         }
 
+        public IActionResult SuccessfulPasswordReset()
+        {
+            return View();
+        }
         public IActionResult PasswordResetSent()
         {
             return View();
         }
+
+     
+
 
         public IActionResult SignOut()
         {
