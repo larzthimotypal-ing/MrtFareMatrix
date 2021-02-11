@@ -11,7 +11,6 @@
         }
         
     }
-
     .login--form{
         display: flex;
         flex-direction: column;
@@ -44,6 +43,12 @@
                 margin: auto;
                 margin-top: 15px;
             }
+            
+        }
+
+        .forgot-pw-link{
+            margin: 10px;
+            color: rgb(38, 38, 214);
         }
 
         .login-alert--error{
@@ -89,9 +94,6 @@
                     min-width: 120px;
                 }
             }
-            
         }
-        
-        
     }
 }

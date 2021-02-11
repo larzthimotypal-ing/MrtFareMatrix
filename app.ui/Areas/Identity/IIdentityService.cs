@@ -21,7 +21,7 @@ namespace app.ui.Areas.Identity
         Task<LogInResult> Login(LogInCommand creds);
         void SignOut();
         CreateEmailVerificationTokenResult CreateEmailVerificationToken(AppUser user);
-        Task<VerifyEmailResult> VerifyResetPassword(string userId, string code);
+        Task<VerifyEmailResult> VerifyEmail(string userId, string code);
         Task<SendEmailVerificationResult> SendEmailVerification(SendEmailVerificationCommand config);
         Task<UserExistsResult> UserExists(string userName);
         Task<SendPasswordResetEmailResult> SendPasswordResetEmail(SendPasswordResetEmailCommand config, AppUser user);

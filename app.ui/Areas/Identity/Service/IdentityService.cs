@@ -205,7 +205,7 @@ namespace app.ui.Areas.Identity.Service
             await _signInManager.SignOutAsync();
         }
 
-        public async Task<VerifyEmailResult> VerifyResetPassword(string userId, string code)
+        public async Task<VerifyEmailResult> VerifyEmail(string userId, string code)
         {
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null)

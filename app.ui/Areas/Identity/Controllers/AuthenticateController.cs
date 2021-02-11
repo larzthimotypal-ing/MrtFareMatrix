@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using app.ui.Areas.Identity.Service.Command.CreateAccount;
 using app.ui.Areas.Identity.Service.Command.LogIn;
 using app.ui.Areas.Identity.Service.Command.PasswordReset;
+using app.ui.Areas.Identity.Service.Command.PasswordResetConfirmation;
 using app.ui.Areas.Identity.Service.Command.SendPasswordResetEmail;
 using app.ui.Areas.Identity.Service.Command.VerifyEmail;
 using Microsoft.AspNetCore.Authorization;
@@ -77,7 +78,8 @@ namespace app.ui.Areas.Identity.Controllers
 
         public IActionResult VerifyEmail(string userId, string code)
         {
-            var result = _identityService.VerifyResetPassword(userId, code).Result;
+            var result = _identityService.VerifyEmail(userId, code).Result;
+            
             
             if (result.Succeeded)
             {
@@ -87,15 +89,44 @@ namespace app.ui.Areas.Identity.Controllers
             return RedirectToRoute(new { area="", controller="Home", action="Error404" });
         }
 
-        public async Task<IActionResult> PasswordReset()
+        public IActionResult PasswordReset()
         {
-            var command = new PasswordResetCommand { Email = "raquelsorila@gmail.com"};
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PasswordReset(string email)
+        {
+            var command = new PasswordResetCommand { Email = email};
             var result = await _identityService.PasswordReset(command);
 
-            return RedirectToRoute(new { area = "Identity", controller = "Authenticate", action = "LogIn" });
+            return RedirectToRoute(new { area = "Identity", controller = "Authenticate", action = "PasswordResetSent" });
 
         }
-        public IActionResult PasswordResetConfirmation()
+        public IActionResult PasswordResetConfirmation(string userId)
+        {
+            var command = new PasswordResetConfirmationCommand {
+                userId = userId
+            };
+
+            return View(command);
+        }
+
+        [HttpPost]
+        public IActionResult PasswordResetConfirmation(string userId, string newPassword, string confirmPassword)
+        {
+            var command = new PasswordResetConfirmationCommand
+            {
+                userId = userId,
+                NewPassword = newPassword,
+                ConfirmPassword = confirmPassword
+            };
+
+          
+            return View();
+        }
+
+        public IActionResult PasswordResetSent()
         {
             return View();
         }
