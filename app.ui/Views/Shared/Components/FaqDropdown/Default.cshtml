@@ -1,0 +1,10 @@
+﻿@model app.ui.Components.ObjectBinding.FaqDropdownObject
+    
+<div class="faq-dropdown">
+    <p class="faq-dropdown--title">@Model.Title <span>&#9655;</span></p>
+    @for (int i = 0; i < Model.Questions.Count; i++)
+    {
+        <span class="faq-dropdown--question hidden">@Model.Questions.ElementAt(i).Key</span>
+        <span class="faq-dropdown--answer hidden">Ans. @Model.Questions.ElementAt(i).Value</span>
+    }
+</div>

@@ -1,1 +1,39 @@
 ﻿
+<div class="wrapper-faq">
+    <div class="faq-title">Frequently Asked Questions </div>
+    <div class="faq-content">
+        @await Component.InvokeAsync("FaqDropdown", new
+    {
+       title = "General Questions",
+       questions = new Dictionary<string, string>()
+       {
+           { "What’s the advantage of using a beep™ card over cash?", 
+               " Enjoy seamless travel by using only one payment card for your MRT. Using beep™ means less hassle and a more convenient way to pay." },
+           { "What should users do with expiring beep™ cards?", "Cardholders can use their beep™ cards up to the day before the last day of the month that the card is expiring (Note: the expiry date is printed on the back of the card below the 16-digit Card Account Number or CAN)." },
+           { "What happens to the balance on an expired card?", "Any remaining balance on an expired card can be transferred to a new card after the expiry date." },
+       }
+    })
+
+        @await Component.InvokeAsync("FaqDropdown", new
+   {
+      title = "Top Up Questions",
+      questions = new Dictionary<string, string>()
+      {
+          { "Where can i load my beep™ card?", "You can load at MRT stations. beep™ cards can also be loaded using self-service kiosks or via Over-The-Air (OTA) loading partners and on our website in reload page (link)." },
+          { "How much can I load in my beep™ card?", "You can load as much as P10,000." },
+          { "How can I check the balance on my beep card?", "You may check the balance of your beep card by signing up on our website." },
+      }
+   })
+        <div class="faq-email">
+            <p class="faq-email--description">
+                Got a question you did not find in our FAQs? Fill in the form and we'll get back to you!
+            </p>
+            <form action="/" method="post" id="faq-form" class="faq-email--forms">
+                <input type="text" name="name" placeholder="Name" class="inputBox" />
+                <input type="text" name="email" placeholder="Email Address" class="inputBox" />
+                <textarea name="message" form="faq-form" placeholder="Enter question here..."></textarea>
+                <input type="submit" class="btn-primary--rectangle--long submit-btn"/>
+            </form>
+        </div>
+    </div>
+</div>

@@ -31,11 +31,14 @@ body{
     overflow: auto;
     margin: 0 auto;
     flex: 1 0 auto;
-    margin: 50px 0;
+    margin: 20px 0;
     align-self: center;
     width: 80%;
 }
 
+.hidden{
+    display: none;
+}
 
 @media screen and (max-width: 425px)
 {

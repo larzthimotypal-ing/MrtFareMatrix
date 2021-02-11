@@ -8,6 +8,7 @@ using app.ui.Components.ObjectBinding;
 
 namespace app.ui.Components
 {
+    [ViewComponent(Name = "NavBar")]
     public class NavBarViewComponent : ViewComponent
     {
         public async Task<IViewComponentResult> InvokeAsync()

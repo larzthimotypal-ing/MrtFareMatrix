@@ -5,26 +5,47 @@
     </div>
     <div class="fare-content">
         <div class="fare-content--stations">
-            <form action="/" method="post">
-                <label for="from">Leaving From:</label>
-                <select id="from" name="from">
-                    <option value="1">Station 1</option>
-                    <option value="2">Station 2</option>
-                    <option value="3">Station 3</option>
-                </select>
-                <label for="to">Going To:</label>
-                <select id="to" name="to">
-                    <option value="1">Station 1</option>
-                    <option value="2">Station 2</option>
-                    <option value="3">Station 3</option>
-                </select>
-            </form>
+            <div class="fare-content--stations--dropdown">
+                <form action="/" method="post">
+                    <div class="station-selector">
+                        <label for="from">Leaving From:</label>
+                        <select id="from" name="from">
+                            <option value="1">Station 1</option>
+                            <option value="2">Station 2</option>
+                            <option value="3">Station 3</option>
+                        </select>
+                    </div>
+                    <div class="station-selector">
+                        <label for="to">Going To:</label>
+                        <select id="to" name="to">
+                            <option value="1">Station 1</option>
+                            <option value="2">Station 2</option>
+                            <option value="3">Station 3</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="fare-content--svg">
+                <img src="~/img/Station SVG.png" alt="StationImg.png" />
+            </div>
         </div>
         <div class="fare-content--payment">
-            <span>Araneta Center Cubao</span>
+            <span class="selected-station">Araneta Center Cubao</span>
             <span>to</span>
-            <span>Ayala</span>
-            <span>P20.00</span>
+            <span class="selected-station">Ayala</span>
+            <span>P 20.00</span>
+        </div>
+    </div>
+    <div class="fare-title">
+        <p>Beep Card</p>
+    </div>
+    <div class="beep-content">
+        <div class="beep-content--svg">
+            <img src="~/img/Fare Matrix Card-beep™.png" alt="Beepcard.png" />
+        </div>
+        <div class="beep-content--details">
+            <span>STORED VALUE CARD</span>
+            <p>Multiple Ride Ticket. Valid for 12 months from the date of purchase. P 100.00 with the last ride bonus</p>
         </div>
     </div>
 </div>

@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace app.ui.Components
 {
+    [ViewComponent(Name = "Footer")]
     public class FooterViewComponent : ViewComponent
     {
         private IConfiguration _config;

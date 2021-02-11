@@ -268,8 +268,6 @@ namespace app.ui.Areas.Identity.Service
 
         public Task<SendPasswordResetEmailResult> SendPasswordResetEmail(SendPasswordResetEmailCommand command, object config)
         {
-
-
             throw new NotImplementedException();
         }
 

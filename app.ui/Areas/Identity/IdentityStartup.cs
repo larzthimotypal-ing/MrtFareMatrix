@@ -14,6 +14,9 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 [assembly: HostingStartup(typeof(app.ui.Areas.Identity.IdentityStartup))]
 namespace app.ui.Areas.Identity
@@ -30,6 +33,41 @@ namespace app.ui.Areas.Identity
                 .AddDbContext<UserIdentityDbContext>(options =>
                 options.UseSqlServer(
                     context.Configuration.GetConnectionString("DefaultConnection")));
+
+                //var constants = context.Configuration.GetSection("Constants");
+
+                //services.AddAuthentication("OAuth")
+                //.AddCookie(config => config.SlidingExpiration = true)
+                //.AddJwtBearer("OAuth", config =>
+                //{
+                    
+                //    var audience = constants.GetValue<string>("Audience");
+                //    var issuer = constants.GetValue<string>("Issuer");
+                //    var secret = constants.GetValue<string>("Secret");
+
+                //    var secretBytes = Encoding.UTF8.GetBytes(secret);
+                //    var key = new SymmetricSecurityKey(secretBytes);
+
+                //    config.Events = new JwtBearerEvents()
+                //    {
+                //        OnMessageReceived = context =>
+                //        {
+                //            if(context.Request.Query.ContainsKey("access_token"))
+                //            {
+                //                context.Token = context.Request.Query["access_token"];
+                //            }
+
+                //            return Task.CompletedTask;
+                //        }
+                //    };
+
+                //    config.TokenValidationParameters = new TokenValidationParameters()
+                //    {
+                //        ValidIssuer = issuer,
+                //        ValidAudience = audience,
+                //        IssuerSigningKey = key
+                //    };
+                //});
 
                 services.AddIdentity<AppUser, IdentityRole>(config =>
                 {
