@@ -16,5 +16,6 @@ namespace app.ui.Areas.Identity.Service.Command.SendPasswordResetEmail
         public string Subject { get; set; }
         public string TextContent { get; set; }
         public string HtmlContent { get; set; }
+       
     }
 }

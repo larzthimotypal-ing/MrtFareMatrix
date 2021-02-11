@@ -5,6 +5,8 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using app.ui.Areas.Identity.Service.Command.CreateAccount;
 using app.ui.Areas.Identity.Service.Command.LogIn;
+using app.ui.Areas.Identity.Service.Command.PasswordReset;
+using app.ui.Areas.Identity.Service.Command.SendPasswordResetEmail;
 using app.ui.Areas.Identity.Service.Command.VerifyEmail;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -71,10 +73,11 @@ namespace app.ui.Areas.Identity.Controllers
         }
 
         public IActionResult EmailConfirmation() => View();
+      
 
         public IActionResult VerifyEmail(string userId, string code)
         {
-            var result = _identityService.VerifyEmail(userId, code).Result;
+            var result = _identityService.VerifyResetPassword(userId, code).Result;
             
             if (result.Succeeded)
             {
@@ -82,6 +85,19 @@ namespace app.ui.Areas.Identity.Controllers
             }
 
             return RedirectToRoute(new { area="", controller="Home", action="Error404" });
+        }
+
+        public async Task<IActionResult> PasswordReset()
+        {
+            var command = new PasswordResetCommand { Email = "raquelsorila@gmail.com"};
+            var result = await _identityService.PasswordReset(command);
+
+            return RedirectToRoute(new { area = "Identity", controller = "Authenticate", action = "LogIn" });
+
+        }
+        public IActionResult PasswordResetConfirmation()
+        {
+            return View();
         }
 
         public IActionResult SignOut()
