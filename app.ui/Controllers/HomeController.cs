@@ -6,16 +6,21 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using app.ui.Models;
+using app.service.Anonymous.Command;
+using app.service;
 
 namespace app.ui.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IAnonymousService _anonymousService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger,
+            IAnonymousService anonymousService)
         {
             _logger = logger;
+            _anonymousService = anonymousService;
         }
 
         public IActionResult Index()
@@ -44,6 +49,21 @@ namespace app.ui.Controllers
 
         public IActionResult FAQs()
         {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> FAQs(string email, string name, string message)
+        {
+            var command = new SendFaqCommand
+            {
+                Email = email,
+                Name = name,
+                Message = message
+            };
+
+            var result = await _anonymousService.SendFaq(command);
+
             return View();
         }
 

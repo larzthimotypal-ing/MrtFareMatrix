@@ -28,7 +28,7 @@
             <p class="faq-email--description">
                 Got a question you did not find in our FAQs? Fill in the form and we'll get back to you!
             </p>
-            <form action="/" method="post" id="faq-form" class="faq-email--forms">
+            <form asp-controller="Home" asp-action="FAQs" method="post" id="faq-form" class="faq-email--forms">
                 <input type="text" name="name" placeholder="Name" class="inputBox" />
                 <input type="text" name="email" placeholder="Email Address" class="inputBox" />
                 <textarea name="message" form="faq-form" placeholder="Enter question here..."></textarea>

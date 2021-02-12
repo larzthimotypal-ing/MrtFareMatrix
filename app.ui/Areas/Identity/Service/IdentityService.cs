@@ -28,6 +28,7 @@ using SendGrid;
 using SendGrid.Helpers.Mail;
 using System.Text.Encodings.Web;
 using app.ui.Areas.Identity.Service.Command.PasswordReset;
+using app.ui.Areas.Identity.Service.Command.PasswordResetConfirmation;
 
 namespace app.ui.Areas.Identity.Service
 {
@@ -90,25 +91,16 @@ namespace app.ui.Areas.Identity.Service
             };
         }
 
-        public async Task<CreatePasswordResetEmailTokenResult> CreatePasswordResetEmailToken(AppUser user)
+        public async Task<PasswordResetConfirmationCommand>PasswordResetConfirmation(PasswordResetConfirmationCommand command)
 
         {
+            var user = await _userManager.FindByIdAsync(command.UserId);
             var passwordToken = await _userManager.GeneratePasswordResetTokenAsync(user);
-            
-            passwordToken = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(passwordToken));
-            var passwordresetlink = UrlHelperExtensions.Action(
-                 _urlHelper,
-                "VerifyResetPassword",
-                "Authenticate",
-                new { userId = user.Id, passwordToken },
-                _httpContextAccessor.HttpContext.Request.Scheme,
-                _httpContextAccessor.HttpContext.Request.Host.ToString()
-                );
-
-            return new CreatePasswordResetEmailTokenResult
-            {
-                Link = passwordresetlink
-            };
+            var result = await _userManager.ResetPasswordAsync(user, passwordToken, command.NewPassword);
+          
+         
+            return new PasswordResetConfirmationCommand { };
+          
 
         }
 
@@ -301,12 +293,15 @@ namespace app.ui.Areas.Identity.Service
                 _httpContextAccessor.HttpContext.Request.Scheme,        /*Scheme*/
                 _httpContextAccessor.HttpContext.Request.Host.ToString()   /*Host*/
                 );
-            var builder = new BodyBuilder();
+            
             var client = new SendGridClient(config.ApiKey);
             var from = new EmailAddress(config.SenderEmail, config.SenderName);
             var to = new EmailAddress(config.ReceiverEmail, config.ReceiverName);
-            var htmlContent = $"<a href='{HtmlEncoder.Default.Encode(link)}'>Test.</a>";
-            
+            var htmlContent = $"<p>You recently requested to reset your password for your MRT FareMatrix Account. Click the link provided below to confirm password reset.<br></p>" +
+                              $"<a href='{HtmlEncoder.Default.Encode(link)}'>Reset Password</a>" +
+                              $"<p>If you did not request this password reset, please ignore this message.</p>" +
+                              $"<p>- MRT Farematrix Team.</p>";
+
             var msg = MailHelper.CreateSingleEmail(
                 from,
                 to,

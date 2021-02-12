@@ -9,5 +9,6 @@ namespace app.ui.Components.ObjectBinding
     {
         public string Title { get; set; }
         public Dictionary<string,string> Questions { get; set; }
+
     }
 }

@@ -12,10 +12,12 @@ namespace app.ui.Components
     {
         public async Task<IViewComponentResult> InvokeAsync(string title, Dictionary<string,string> questions)
         {
+            
             var dropdown = new FaqDropdownObject
             {
                 Title = title,
                 Questions = questions
+
             };
 
             return View(dropdown);

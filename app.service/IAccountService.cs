@@ -8,5 +8,6 @@ namespace app.service
     public interface IAccountService
     {
         CreateAccountResult CreateAccount(CreateAccountCommand command);
+        
     }
 }

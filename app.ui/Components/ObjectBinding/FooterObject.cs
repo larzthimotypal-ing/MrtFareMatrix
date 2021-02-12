@@ -9,5 +9,9 @@ namespace app.ui.Components.ObjectBinding
     {
         public string Email { get; set; }
         public string ContactNumber { get; set; }
+        public bool IsAuthenticated { get; set; }
+        public bool IsAdmin { get; set; }
+        public string Name { get; set; }
+        public string Role { get; set; }
     }
 }
